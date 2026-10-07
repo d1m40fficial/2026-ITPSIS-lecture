@@ -1,0 +1,465 @@
+diff --git a/package-lock.json b/package-lock.json
+index 8af0200..afab2bd 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "@olgakraven/lecture-engine",
+-  "version": "0.1.1-itpsis.1",
++  "version": "0.1.2-itpsis.1",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "@olgakraven/lecture-engine",
+-      "version": "0.1.1-itpsis.1",
++      "version": "0.1.2-itpsis.1",
+       "dependencies": {
+         "lucide-react": "^1.38.0",
+         "motion": "^13.1.1",
+diff --git a/package.json b/package.json
+index ed8eb7e..206b273 100644
+--- a/package.json
++++ b/package.json
+@@ -1,7 +1,7 @@
+ {
+   "name": "@olgakraven/lecture-engine",
+   "private": true,
+-  "version": "0.1.1-itpsis.1",
++  "version": "0.1.2-itpsis.1",
+   "type": "module",
+   "scripts": {
+     "dev": "vite",
+diff --git a/src/engine/Assessment.tsx b/src/engine/Assessment.tsx
+index b7f1e4d..5cb1109 100644
+--- a/src/engine/Assessment.tsx
++++ b/src/engine/Assessment.tsx
+@@ -30,10 +30,11 @@ export function TaskView({task:t}:{task:Task}){
+  {show&&a?.result&&!ctx.readonly&&<Modal title="Разбор ответа" onClose={()=>ctx.reveal(t,false)}><p>{a.result.explanation}</p><h3>Правильный ответ</h3><p className="preserve-lines">{a.result.solution}</p>{ctx.keys[t.id]?.optionExplanations&&<ul>{Object.entries(ctx.keys[t.id].optionExplanations!).map(([id,text])=><li key={id}><strong>{t.options?.find(o=>o.id===id)?.text}:</strong> {text}</li>)}</ul>}</Modal>}
+  </section>
+ }
+-export function AssessmentResults({lecture,onGo}:{lecture:Lecture;onGo:(index:number)=>void}){
++export function AssessmentResults({lecture,onGo,attest}:{lecture:Lecture;onGo:(index:number)=>void;attest?:(result:{score:number;total:number;correct:number;wrong:number})=>ReactNode}){
+  const ctx=useContext(AssessmentContext)!;const [confirm,setConfirm]=useState(false);const tasks=lecture.slides.map((s,index)=>({task:s.task,index})).filter(x=>x.task)
+  const correct=tasks.filter(x=>ctx.attempts[x.task!.id]?.result?.status==='correct').length;const wrong=tasks.filter(x=>ctx.attempts[x.task!.id]?.result?.status==='incorrect').length;const score=tasks.reduce((sum,x)=>sum+(ctx.attempts[x.task!.id]?.result?.score||0),0)
+- return <><div className="result-summary"><div><b>{correct}</b><span>Правильно</span></div><div><b>{wrong}</b><span>С ошибкой</span></div><div><b>{tasks.length-correct-wrong}</b><span>Без проверки</span></div></div><p><strong>Баллы: {score.toLocaleString('ru-RU')} из {tasks.length}.</strong> Четыре задания одного вопроса — максимум 4 балла. Каждая пара соответствия — 0,25 балла.</p><ol className="result-list">{tasks.map(({task:t,index})=>{const a=ctx.attempts[t!.id];return <li key={t!.id}><button className="text-button" onClick={()=>onGo(index)}>{t!.prompt}</button><p className={a?.result?.status||''}>{!a?.result?'Ответ ещё не проверен':a.result.status==='correct'?'Правильно':'Есть ошибка'}</p>{a?.result&&<details><summary>Ответ и объяснение</summary><p><strong>Ваш ответ:</strong> {formatAnswer(t!,a.submitted!)}</p><p><strong>Правильный ответ:</strong></p><p className="preserve-lines">{a.result.solution}</p><p>{a.result.explanation}</p></details>}</li>})}</ol>{confirm?<div className="dialog-actions"><span>Сбросить все попытки курса на этом устройстве?</span><button className="button primary" onClick={()=>{ctx.reset();setConfirm(false)}}>Сбросить</button><button className="button ghost" onClick={()=>setConfirm(false)}>Отмена</button></div>:<button className="button ghost" onClick={()=>setConfirm(true)}>Начать самопроверку заново</button>}</>
++ return <><div className="result-summary"><div><b>{correct}</b><span>Правильно</span></div><div><b>{wrong}</b><span>С ошибкой</span></div><div><b>{tasks.length-correct-wrong}</b><span>Без проверки</span></div></div><p><strong>Баллы: {score.toLocaleString('ru-RU')} из {tasks.length}.</strong> Четыре задания одного вопроса — максимум 4 балла. Каждая пара соответствия — 0,25 балла.</p><ol className="result-list">{tasks.map(({task:t,index})=>{const a=ctx.attempts[t!.id];return <li key={t!.id}><button className="text-button" onClick={()=>onGo(index)}>{t!.prompt}</button><p className={a?.result?.status||''}>{!a?.result?'Ответ ещё не проверен':a.result.status==='correct'?'Правильно':'Есть ошибка'}</p>{a?.result&&<details><summary>Ответ и объяснение</summary><p><strong>Ваш ответ:</strong> {formatAnswer(t!,a.submitted!)}</p><p><strong>Правильный ответ:</strong></p><p className="preserve-lines">{a.result.solution}</p><p>{a.result.explanation}</p></details>}</li>})}</ol>{attest&&tasks.length>0&&attest({score,total:tasks.length,correct,wrong})}
++  {confirm?<div className="dialog-actions"><span>Сбросить все попытки курса на этом устройстве?</span><button className="button primary" onClick={()=>{ctx.reset();setConfirm(false)}}>Сбросить</button><button className="button ghost" onClick={()=>setConfirm(false)}>Отмена</button></div>:<button className="button ghost" onClick={()=>setConfirm(true)}>Начать самопроверку заново</button>}</>
+ }
+ function formatAnswer(t:Task,a:Answer){if(typeof a==='string')return a;if(Array.isArray(a))return a.map(id=>t.options?.find(o=>o.id===id)?.text||id).join('; ');return Object.entries(a).map(([id,x])=>`${t.items?.find(o=>o.id===id)?.text}: ${t.options?.find(o=>o.id===x)?.text||'—'}`).join('; ')}
+ 
+diff --git a/src/engine/LectureSite.tsx b/src/engine/LectureSite.tsx
+index 0f57999..cf3964f 100644
+--- a/src/engine/LectureSite.tsx
++++ b/src/engine/LectureSite.tsx
+@@ -1,11 +1,14 @@
+ import {useEffect,useState,lazy,Suspense} from 'react'
+-import {CircleHelp,ArrowLeft,ArrowRight,BarChart3,BookOpen,Download,ExternalLink,List,Maximize,Minimize,MonitorPlay,MousePointer2,Moon,Pause,Play,RotateCcw,Search,Sun,UserRound} from 'lucide-react'
++import {CircleHelp,ArrowLeft,ArrowRight,BarChart3,Download,KeyRound,List,Maximize,Minimize,MousePointer2,Moon,Pause,Play,RotateCcw,Search,Sun} from 'lucide-react'
+ import type {Course,Lecture,Profile} from './model'
+-import {assetUrl,safeUrl,TEMPLATE_VERSION} from './model'
++import {assetUrl,TEMPLATE_VERSION} from './model'
+ import {read,save} from './storage'
+ import {Modal} from './Modal'
+ import {SlideView} from './SlideView'
+ import {AssessmentProvider,AssessmentResults} from './Assessment'
++import {ResultCertificate} from './ResultCertificate'
++import type {AccessFile} from './access'
++import {forgetLecture,isUnlocked,loadAccessFile,matchAccessCode,matchReleaseCode,readUnlocked,rememberUnlock,requiresCode} from './access'
+ import './reference.css'
+ import './template.css'
+ import './assessment.css'
+@@ -13,50 +16,58 @@ import './layout-final.css'
+ const Teaching=lazy(()=>import('./Teaching'))
+ const blankProfile:Profile={fullName:'',position:'',department:''}
+ export function LectureSite({course,base='/'}:{course:Course;base?:string}){
+- const prefix=`lecture:${base}:${course.id}`
+- const [query,setQuery]=useState(()=>new URLSearchParams(location.search))
+- const [theme,setTheme]=useState<'light'|'dark'>(()=>read(`${prefix}:theme`,'light'))
+- const [profile,setProfile]=useState<Profile>(()=>read(`${prefix}:profile`,blankProfile))
+- const [materials,setMaterials]=useState(()=>read(`${prefix}:materials`,course.materialsUrl))
+- const [modal,setModal]=useState('');const [search,setSearch]=useState('');const [semester,setSemester]=useState<number|'all'>('all')
+- const [animations,setAnimations]=useState(()=>read(`${prefix}:animation`,true));const [replay,setReplay]=useState(0)
+- const [pointerEnabled,setPointerEnabled]=useState(false);const [pointer,setPointer]=useState<{x:number;y:number}|null>(null)
+- const [fullscreen,setFullscreen]=useState(false);const [notice,setNotice]=useState('')
++const prefix=`lecture:${base}:${course.id}`
++  const [query,setQuery]=useState(()=>new URLSearchParams(location.search))
++  const [theme,setTheme]=useState<'light'|'dark'>(()=>read(`${prefix}:theme`,'light'))
++  const [profile,setProfile]=useState<Profile>(()=>read(`${prefix}:profile`,blankProfile))
++  const [modal,setModal]=useState('');const [search,setSearch]=useState('')
++  const [animations,setAnimations]=useState(()=>read(`${prefix}:animation`,true));const [replay,setReplay]=useState(0)
++  const [pointerEnabled,setPointerEnabled]=useState(false);const [pointer,setPointer]=useState<{x:number;y:number}|null>(null)
++  const [fullscreen,setFullscreen]=useState(false);const [notice,setNotice]=useState('')
++const [access,setAccess]=useState<AccessFile|null>(null);const [accessReady,setAccessReady]=useState(false)
++ const [unlocked,setUnlocked]=useState(()=>readUnlocked(base,course.id))
++ const [pending,setPending]=useState<Lecture|null>(null);const [attempt,setAttempt]=useState('');const [codeError,setCodeError]=useState('')
++ const [releasing,setReleasing]=useState<Lecture|null>(null);const [masterCode,setMasterCode]=useState('');const [masterError,setMasterError]=useState('')
+  const mode=query.get('mode')||'viewer'
+  const lecture=course.lectures.find(x=>x.id===query.get('lecture'))
+  const index=lecture?Math.max(0,lecture.slides.findIndex(s=>s.id===query.get('slide'))):0
+  const slide=lecture?.slides[index]
++ const locked=!!lecture&&requiresCode(access,lecture.id)&&!isUnlocked(access,unlocked,lecture.id)
+  const navigate=(params:Record<string,string>)=>{const u=new URL(location.href);u.search=new URLSearchParams(params).toString();history.pushState({},'',u);setQuery(new URLSearchParams(u.search));window.scrollTo(0,0)}
+- const go=(n:number)=>{if(!lecture)return;const s=lecture.slides[Math.max(0,Math.min(lecture.slides.length-1,n))];save(`${prefix}:${course.contentVersion}:${lecture.id}:progress`,s.id);const u=new URL(location.href);u.searchParams.set('slide',s.id);history.replaceState({},'',u);setQuery(new URLSearchParams(u.search))}
+- const open=(l:Lecture)=>{const stored=read(`${prefix}:${course.contentVersion}:${l.id}:progress`,l.slides[0].id);navigate({lecture:l.id,slide:l.slides.some(s=>s.id===stored)?stored:l.slides[0].id})}
++ const go=(n:number)=>{if(!lecture||locked)return;const s=lecture.slides[Math.max(0,Math.min(lecture.slides.length-1,n))];save(`${prefix}:${course.contentVersion}:${lecture.id}:progress`,s.id);const u=new URL(location.href);u.searchParams.set('slide',s.id);history.replaceState({},'',u);setQuery(new URLSearchParams(u.search))}
++ const enter=(l:Lecture)=>{const stored=read(`${prefix}:${course.contentVersion}:${l.id}:progress`,l.slides[0].id);navigate({lecture:l.id,slide:l.slides.some(s=>s.id===stored)?stored:l.slides[0].id})}
++ const open=(l:Lecture)=>{if(requiresCode(access,l.id)&&!isUnlocked(access,unlocked,l.id)){setPending(l);setAttempt('');setCodeError('');return}enter(l)}
++ const submitCode=async(e:React.FormEvent)=>{e.preventDefault();if(!access||!pending)return;const hash=await matchAccessCode(access,pending.id,attempt);if(!hash){setCodeError('Код не подходит. Проверьте раскладку и попробуйте ещё раз.');return}rememberUnlock(base,course.id,pending.id,hash);setUnlocked(readUnlocked(base,course.id));setPending(null);enter(pending)}
++ // За компьютером может сесть другой человек: снимаем доступ и имя по мастер-коду.
++ const askRelease=(l:Lecture)=>{setReleasing(l);setMasterCode('');setMasterError('')}
++ const submitRelease=async(e:React.FormEvent)=>{e.preventDefault();if(!releasing)return;if(!await matchReleaseCode(access,masterCode)){setMasterError('Мастер-код не подходит. Его выдаёт преподаватель.');return}forgetLecture(base,course.id,releasing.id);setUnlocked(readUnlocked(base,course.id));setNotice(`Доступ к лекции «${releasing.title}» и сохранённое ФИО сняты на этом устройстве. Следующему пользователю понадобится код.`);setReleasing(null)}
++ useEffect(()=>{if(locked&&!pending){setPending(lecture);setAttempt('');setCodeError('')}if(!locked&&pending&&!requiresCode(access,pending.id))setPending(null)},[locked])
+  const print=(scope:string)=>{const u=new URL(location.href);u.search=new URLSearchParams({mode:'print',scope,auto:'1'}).toString();window.open(u,'_blank','noopener')}
+  const toggleFull=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{setNotice('Полноэкранный режим недоступен. Используйте полноэкранный режим браузера.')}}
+  useEffect(()=>{const pop=()=>setQuery(new URLSearchParams(location.search));const full=()=>setFullscreen(Boolean(document.fullscreenElement));window.addEventListener('popstate',pop);document.addEventListener('fullscreenchange',full);return()=>{window.removeEventListener('popstate',pop);document.removeEventListener('fullscreenchange',full)}},[])
+  useEffect(()=>{document.documentElement.dataset.theme=theme;save(`${prefix}:theme`,theme)},[theme,prefix])
+  useEffect(()=>{const font=new FontFace('Raleway',`url(${assetUrl(course.font,base)})`,{weight:'100 900'});font.load().then(f=>document.fonts.add(f)).catch(()=>{});},[course.font,base])
+  useEffect(()=>{save(`${prefix}:animation`,animations)},[animations,prefix])
++ useEffect(()=>{if(!course.accessCodesUrl){setAccessReady(true);return}let live=true;loadAccessFile(course.accessCodesUrl,base,course.id,course.contentVersion).then(file=>{if(live){setAccess(file);setAccessReady(true)}});return()=>{live=false}},[course.accessCodesUrl,base,course.id,course.contentVersion])
+  useEffect(()=>{if(mode!=='viewer'||!lecture)return;const key=(e:KeyboardEvent)=>{const target=e.target as HTMLElement;if(modal||target.closest('input,textarea,select,button,a,[contenteditable="true"]'))return;const next=['ArrowRight','PageDown',' '].includes(e.key);const previous=['ArrowLeft','PageUp'].includes(e.key);if(next||previous||['Home','End'].includes(e.key)){e.preventDefault();go(e.key==='Home'?0:e.key==='End'?lecture.slides.length-1:index+(next?1:-1))}};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key)},[mode,lecture,index,modal])
+  useEffect(()=>{if(mode==='print'&&query.get('auto')==='1'){Promise.all([document.fonts.ready,...Array.from(document.images).map(img=>img.decode().catch(()=>{}))]).then(()=>{setTimeout(()=>window.print(),150)})}},[mode,query])
+- const startTeaching=()=>{if(!lecture)return;const session=crypto.randomUUID();const u=new URL(location.href);u.search=new URLSearchParams({mode:'audience',lecture:lecture.id,session}).toString();const popup=window.open(u,`audience-${session}`);(window as Window&{lectureAudience?:Window|null}).lectureAudience=popup;navigate({mode:'presenter',lecture:lecture.id,slide:slide!.id,session})}
+  const icon=(label:string,child:React.ReactNode,fn:()=>void,pressed?:boolean)=><button className="icon-button" title={label} aria-label={label} aria-pressed={pressed} onClick={fn}>{child}</button>
+  const themeButton=icon(theme==='light'?'Включить тёмную тему':'Включить светлую тему',theme==='light'?<Moon size={19}/>:<Sun size={19}/>,()=>setTheme(theme==='light'?'dark':'light'))
+  if((mode==='presenter'||mode==='audience')&&lecture)return <Suspense fallback={<p>Открываем занятие…</p>}><Teaching course={course} lecture={lecture} base={base} profile={profile} mode={mode} session={query.get('session')||''} initialSlide={slide!.id} onExit={()=>navigate({lecture:lecture.id,slide:slide!.id})}/></Suspense>
+  if(mode==='print'){const scope=query.get('scope');const list=course.lectures.filter(l=>scope==='all'||scope===l.id||scope===`semester-${l.semester}`);return <main className="print-document"><div className="print-hint"><strong>PDF · {list.length} лекций</strong><button className="button primary" onClick={()=>window.print()}>Сохранить PDF</button></div>{list.flatMap(l=>l.slides.map((s,i)=><section className="print-page" key={s.id}><SlideView course={course} lecture={l} slide={s} number={i+1} base={base} profile={profile}/></section>))}</main>}
+  return <AssessmentProvider course={course} base={base}>
+- {!lecture?<main className="catalog"><header className="catalog-header"><a className="brand-lockup" href={base}><img src={assetUrl(course.logo,base)} alt="Логотип компании"/><span><strong>{course.code}</strong><small>{course.discipline}</small></span></a><nav><button className="button ghost settings-button" onClick={()=>setModal('settings')}><UserRound size={19}/><span>Настройка перед занятием</span></button>{themeButton}<a className="icon-button" href={assetUrl('guide.html',base)} target="_blank" rel="noopener noreferrer" title="Как пользоваться сайтом" aria-label="Как пользоваться сайтом"><CircleHelp size={19}/></a></nav></header>
+- {query.has('lecture')&&<div className="notice">Лекция не найдена. Выберите тему в каталоге.</div>}
+- <section className="catalog-hero"><div className="hero-copy"><p className="eyebrow">{course.semesters.join(' и ')} семестры · {course.year}</p><h1>{course.heroTitle} <span>{course.heroAccent}</span></h1><p className="hero-lead">{course.slogan}</p><div className="teacher-summary"><span>Преподаватель</span><strong>{profile.fullName||'Ваше имя на каждой лекции'}</strong><small>{profile.position||'Заполните данные перед занятием'}</small>{profile.department&&<small>{profile.department}</small>}</div></div><div className="hero-mascot"><div className="chevron-backdrop"/><img src={assetUrl(course.mascot,base)} alt={course.mascotAlt}/></div></section>
+- <section className="catalog-tools" aria-label="Поиск и фильтры"><label className="search-field"><Search size={19}/><input aria-label="Поиск по темам" placeholder="Поиск по темам" value={search} onChange={e=>setSearch(e.target.value)}/></label><div className="semester-filter">{(['all',...course.semesters] as const).map(s=><button key={s} className={semester===s?'active':''} aria-pressed={semester===s} onClick={()=>setSemester(s)}>{s==='all'?'Все темы':`${s} семестр`}</button>)}</div>{safeUrl(materials)?<a className="materials-link" href={safeUrl(materials)} target="_blank" rel="noopener noreferrer"><BookOpen size={18}/>Материалы<ExternalLink size={15}/></a>:<button className="materials-link" onClick={()=>setModal('settings')}><BookOpen size={18}/>Прикрепить материалы</button>}</section>
+- <section className="topic-grid">{course.lectures.filter(l=>(semester==='all'||l.semester===semester)&&`${l.title} ${l.sourceTitle}`.toLowerCase().includes(search.toLowerCase())).map(l=><article className={`topic-card period-${course.semesters.indexOf(l.semester)%2}`} key={l.id}><div className="topic-card-top"><span className="topic-index">{String(course.lectures.indexOf(l)+1).padStart(2,'0')}</span><span className="semester-tag">{l.semester} семестр</span></div><h2>{l.title}</h2><p>{l.sourceTitle}</p><div className="topic-card-footer"><div className="topic-card-actions"><button className="button ghost" onClick={()=>print(l.id)}><Download size={17}/>Сохранить PDF</button><button className="button primary" onClick={()=>open(l)}>Открыть</button></div></div></article>)}</section>
+- {!course.lectures.some(l=>(semester==='all'||l.semester===semester)&&`${l.title} ${l.sourceTitle}`.toLowerCase().includes(search.toLowerCase()))&&<section className="empty-state"><h2>Темы не найдены</h2><p>Измените запрос или выберите другой семестр.</p></section>}
+- <footer className="catalog-footer"><a href={assetUrl('guide.html',base)} target="_blank" rel="noopener noreferrer">Как пользоваться сайтом</a><span>{course.demo?'Демонстрационный курс · образцы макетов, не полный комплект по РПД':course.discipline}</span><span>Учебный год {course.year}</span></footer></main>:<main className={`deck-shell ${animations?'motion-on':''}`}>
+- <header className="deck-toolbar"><button className="button ghost" onClick={()=>navigate({})}><ArrowLeft size={18}/>Каталог</button><div className="deck-topic"><strong>{lecture.title}</strong><span>{lecture.semester} семестр</span></div><div className="toolbar-actions">
+- {icon('Результаты самопроверки',<BarChart3 size={19}/>,()=>setModal('results'))}
+- {icon(animations?'Отключить анимацию':'Включить анимацию',animations?<Pause size={19}/>:<Play size={19}/>,()=>setAnimations(!animations),animations)}
+- {icon('Повторить анимацию',<RotateCcw size={19}/>,()=>setReplay(replay+1))}
+- {icon('Настройка перед занятием',<UserRound size={19}/>,()=>setModal('settings'))}
+- {icon('Начать занятие в двух окнах',<MonitorPlay size={19}/>,startTeaching)}
+- {icon('Открыть содержание',<List size={19}/>,()=>{setSearch('');setModal('toc')})}
++{!lecture||!accessReady||locked?<main className="catalog" data-testid="catalog"><header className="catalog-header"><a className="brand-lockup" href={base}><img src={assetUrl(course.logo,base)} alt="Логотип компании"/><span><strong>{course.code}</strong><small>{course.discipline}</small></span></a><nav>{themeButton}<a className="icon-button" href={assetUrl('guide.html',base)} target="_blank" rel="noopener noreferrer" title="Как пользоваться сайтом" aria-label="Как пользоваться сайтом"><CircleHelp size={19}/></a></nav></header>
++  {query.has('lecture')&&<div className="notice">Лекция не найдена. Выберите тему в каталоге.</div>}
++  <section className="catalog-hero"><div className="hero-copy"><p className="eyebrow">{course.year}</p><h1>{course.heroTitle} <span>{course.heroAccent}</span></h1><p className="hero-lead">{course.slogan}</p><div className="teacher-summary"><span>Преподаватель</span><strong>{course.teacher||profile.fullName||'Имя преподавателя'}</strong></div></div><div className="hero-mascot"><div className="chevron-backdrop"/><img src={assetUrl(course.mascot,base)} alt={course.mascotAlt}/></div></section>
++  <section className="catalog-tools" aria-label="Поиск"><label className="search-field"><Search size={19}/><input aria-label="Поиск по темам" placeholder="Поиск по темам" value={search} onChange={e=>setSearch(e.target.value)}/></label></section>
++  <section className="topic-grid">{course.lectures.filter(l=>`${l.title} ${l.sourceTitle}`.toLowerCase().includes(search.toLowerCase())).map(l=><article className="topic-card" key={l.id}><div className="topic-card-top"><span className="topic-index">{String(course.lectures.indexOf(l)+1).padStart(2,'0')}</span>{requiresCode(access,l.id)&&<span className="locked-tag"><KeyRound size={13}/>По коду</span>}</div><h2>{l.title}</h2><p>{l.sourceTitle}</p><div className="topic-card-footer"><div className="topic-card-actions">{isUnlocked(access,unlocked,l.id)&&<button className="button ghost" onClick={()=>askRelease(l)}>Освободить доступ</button>}<button className="button primary" onClick={()=>open(l)}>Открыть</button></div></div></article>)}</section>
++  {!course.lectures.some(l=>`${l.title} ${l.sourceTitle}`.toLowerCase().includes(search.toLowerCase()))&&<section className="empty-state"><h2>Темы не найдены</h2><p>Измените запрос и повторите поиск.</p></section>}
++  <footer className="catalog-footer"><a href={assetUrl('guide.html',base)} target="_blank" rel="noopener noreferrer">Как пользоваться сайтом</a><span>{course.demo?'Демонстрационный курс · образцы макетов, не полный комплект по РПД':course.discipline}</span><span>Учебный год {course.year}</span></footer></main>:<main className={`deck-shell ${animations?'motion-on':''}`}>
++  <header className="deck-toolbar"><button className="button ghost" onClick={()=>navigate({})}><ArrowLeft size={18}/>Каталог</button><div className="deck-topic"><strong data-testid="deck-title">{lecture.title}</strong></div><div className="toolbar-actions">
++  {icon('Результаты самопроверки',<BarChart3 size={19}/>,()=>setModal('results'))}
++  {icon(animations?'Отключить анимацию':'Включить анимацию',animations?<Pause size={19}/>:<Play size={19}/>,()=>setAnimations(!animations),animations)}
++  {icon('Повторить анимацию',<RotateCcw size={19}/>,()=>setReplay(replay+1))}
++  {icon('Открыть содержание',<List size={19}/>,()=>{setSearch('');setModal('toc')})}
+  {themeButton}<a className="icon-button" href={assetUrl('guide.html',base)} target="_blank" rel="noopener noreferrer" title="Как пользоваться сайтом" aria-label="Как пользоваться сайтом"><CircleHelp size={19}/></a>
+  {icon('Указка',<MousePointer2 size={19}/>,()=>{setPointerEnabled(!pointerEnabled);setPointer(null)},pointerEnabled)}
+  {icon('Скачать лекцию',<Download size={19}/>,()=>setModal('download'))}
+@@ -67,16 +78,21 @@ export function LectureSite({course,base='/'}:{course:Course;base?:string}){
+  <nav className="deck-controls" aria-label="Навигация по слайдам"><button className="button secondary" disabled={!index} onClick={()=>go(index-1)}><ArrowLeft size={18}/>Назад</button><button className="slide-counter" onClick={()=>{setSearch('');setModal('toc')}} aria-label="Счётчик и содержание">{index+1} / {lecture.slides.length}</button><button className="button primary" disabled={index===lecture.slides.length-1} onClick={()=>go(index+1)}>Вперёд<ArrowRight size={18}/></button></nav>
+  <span className="sr-only" aria-live="polite">Слайд {index+1}: {slide!.title}</span></main>}
+  {notice&&<div className="floating-notice" role="status" onClick={()=>setNotice('')}>{notice}</div>}
+- {modal==='settings'&&<Settings course={course} profile={profile} materials={materials} onClose={()=>setModal('')} onSave={(p,m)=>{setProfile(p);setMaterials(m);save(`${prefix}:profile`,p);save(`${prefix}:materials`,m)}} print={print}/>}
++ {pending&&<AccessGate lecture={pending} attempt={attempt} error={codeError} onChange={setAttempt} onSubmit={submitCode} onClose={()=>{setPending(null);if(locked)navigate({})}}/>}
++  {releasing&&<Modal title="Освободить доступ" onClose={()=>setReleasing(null)}><form className="settings-form" onSubmit={submitRelease}><p className="field-help">{releasing.title}. Введите мастер-код преподавателя: доступ и сохранённое ФИО будут сняты на этом устройстве.</p><label>Мастер-код<input autoFocus autoComplete="off" spellCheck={false} aria-label="Мастер-код" value={masterCode} onChange={e=>setMasterCode(e.target.value)}/></label>{masterError&&<p role="alert" className="task-error">{masterError}</p>}<div className="dialog-actions"><button className="button ghost" type="button" onClick={()=>setReleasing(null)}>Отмена</button><button className="button primary" type="submit">Снять доступ</button></div></form></Modal>}
++  {modal==='settings'&&<Settings course={course} profile={profile} onClose={()=>setModal('')} onSave={p=>{setProfile(p);save(`${prefix}:profile`,p)}} print={print}/>}
+  {modal==='toc'&&lecture&&<Modal title="Содержание лекции" onClose={()=>setModal('')}><label className="search-field"><Search size={18}/><input autoFocus aria-label="Найти слайд" placeholder="Найти слайд" value={search} onChange={e=>setSearch(e.target.value)}/></label><ol className="toc-list">{lecture.slides.map((s,i)=>({s,i})).filter(({s})=>s.title.toLowerCase().includes(search.toLowerCase())).map(({s,i})=><li key={s.id}><button aria-current={i===index?'step':undefined} onClick={()=>{go(i);setModal('')}}><b>{String(i+1).padStart(2,'0')}</b>{s.title}</button></li>)}</ol></Modal>}
+  {modal==='download'&&lecture&&<Modal title="Скачать лекцию" onClose={()=>setModal('')}><p>Все слайды текущей лекции. Заметки и ответы преподавателя не включаются.</p><button className="button primary" onClick={()=>print(lecture.id)}><Download size={18}/>Сохранить PDF</button></Modal>}
+- {modal==='results'&&lecture&&<Modal title="Самопроверка" onClose={()=>setModal('')}><AssessmentResults lecture={lecture} onGo={i=>{go(i);setModal('')}}/></Modal>}
++ {modal==='results'&&lecture&&<Modal title="Самопроверка" onClose={()=>setModal('')}><AssessmentResults lecture={lecture} onGo={i=>{go(i);setModal('')}} attest={access&&unlocked[lecture.id]?.hash?r=><ResultCertificate course={course} base={base} lecture={lecture} access={access} codeHash={unlocked[lecture.id].hash} result={r}/>:undefined}/></Modal>}
+  <span className="sr-only">Версия шаблона {TEMPLATE_VERSION}</span></AssessmentProvider>
+ }
+-function Settings({course,profile,materials,onSave,onClose,print}:{course:Course;profile:Profile;materials:string;onSave:(p:Profile,m:string)=>void;onClose:()=>void;print:(scope:string)=>void}){
+- const [p,setP]=useState(profile);const [m,setM]=useState(materials);const [error,setError]=useState('')
+- const persist=()=>{if(m&&!safeUrl(m)){setError('Укажите полный адрес папки, начинающийся с https:// или http://');return false}onSave(p,m);return true}
+- return <Modal title="Настройка перед занятием" onClose={onClose}><form onSubmit={e=>{e.preventDefault();if(persist())onClose()}} className="settings-form"><label>ФИО преподавателя<input autoComplete="name" value={p.fullName} onChange={e=>setP({...p,fullName:e.target.value})}/></label><label>Должность<input value={p.position} onChange={e=>setP({...p,position:e.target.value})}/></label><label>Кафедра или лаборатория<input value={p.department} onChange={e=>setP({...p,department:e.target.value})}/></label><label>Ссылка на папку с материалами<input type="url" placeholder="https://…" value={m} onChange={e=>setM(e.target.value)}/></label><p className="field-help">Настройки сохраняются в этом браузере. В опубликованном курсе общая ссылка задаётся автором.</p>{error&&<p role="alert">{error}</p>}<section className="profile-downloads"><strong>Сохранить лекции в PDF</strong><div>{course.semesters.map(s=><button type="button" className="button ghost" key={s} onClick={()=>{if(persist())print(`semester-${s}`)}}><Download size={17}/>{s} семестр</button>)}<button type="button" className="button ghost" onClick={()=>{if(persist())print('all')}}><Download size={17}/>За {course.year} год</button></div></section>
+- <div className="dialog-actions"><button className="button primary" type="submit">Сохранить настройки</button></div></form></Modal>
++function AccessGate({lecture,attempt,error,onChange,onSubmit,onClose}:{lecture:Lecture;attempt:string;error:string;onChange:(v:string)=>void;onSubmit:(e:React.FormEvent)=>void;onClose:()=>void}){
++ return <Modal title="Доступ к лекции" onClose={onClose}><form className="settings-form" onSubmit={onSubmit}><p className="field-help">{lecture.title}. Код выдаёт преподаватель в начале занятия.</p><label>Код доступа<input autoFocus autoComplete="off" spellCheck={false} aria-label="Код доступа" placeholder="Код выдаёт преподаватель" value={attempt} onChange={e=>onChange(e.target.value)}/></label>{error&&<p role="alert" className="task-error">{error}</p>}<div className="dialog-actions"><button className="button ghost" type="button" onClick={onClose}>Отмена</button><button className="button primary" type="submit">Открыть лекцию</button></div></form></Modal>
++}
++function Settings({course,profile,onSave,onClose,print}:{course:Course;profile:Profile;onSave:(p:Profile)=>void;onClose:()=>void;print:(scope:string)=>void}){
++ const [p,setP]=useState(profile)
++ const persist=()=>{onSave(p);return true}
++ return <Modal title="Данные преподавателя" onClose={onClose}><form onSubmit={e=>{e.preventDefault();persist();onClose()}} className="settings-form"><label>ФИО преподавателя<input autoComplete="name" value={p.fullName} onChange={e=>setP({...p,fullName:e.target.value})}/></label><label>Должность<input value={p.position} onChange={e=>setP({...p,position:e.target.value})}/></label><label>Кафедра или лаборатория<input value={p.department} onChange={e=>setP({...p,department:e.target.value})}/></label><p className="field-help">Настройки сохраняются в этом браузере. В опубликованном курсе общие данные задаются автором.</p><section className="profile-downloads"><strong>Сохранить лекции в PDF</strong><div>{course.semesters.map(s=><button type="button" className="button ghost" key={s} onClick={()=>{persist();print(`semester-${s}`)}}><Download size={17}/>{s} семестр</button>)}<button type="button" className="button ghost" onClick={()=>{persist();print('all')}}><Download size={17}/>За {course.year} год</button></div></section>
++ <div className="dialog-actions"><button className="button primary" type="submit">Сохранить</button></div></form></Modal>
+ }
+ 
+diff --git a/src/engine/ResultCertificate.tsx b/src/engine/ResultCertificate.tsx
+new file mode 100644
+index 0000000..ac0fffa
+--- /dev/null
++++ b/src/engine/ResultCertificate.tsx
+@@ -0,0 +1,28 @@
++import {useState} from 'react'
++import type {Course,Lecture} from './model'
++import type {AccessFile,Certificate} from './access'
++import {identityKey,makeCertificate} from './access'
++import {downloadJson,read,save} from './storage'
++
++// ФИО привязано к лекции: «Освободить доступ» на устройстве снимает и имя.
++// Подпись покрывает имя, отпечаток кода и результат.
++export function ResultCertificate({course,base,lecture,access,codeHash,result}:{course:Course;base:string;lecture:Lecture;access:AccessFile;codeHash:string;result:{score:number;total:number;correct:number;wrong:number}}){
++  const nameKey=identityKey(base,course.id,lecture.id)
++  const [fullName,setFullName]=useState(()=>read(nameKey,'') as string)
++  const [locked,setLocked]=useState(()=>Boolean(read(nameKey,'')))
++  const [error,setError]=useState('')
++  const [certificate,setCertificate]=useState<Certificate|null>(null)
++  const [busy,setBusy]=useState(false)
++  const sign=async(e:React.FormEvent)=>{e.preventDefault();setBusy(true);setError('');try{
++    const made=await makeCertificate(access,lecture.id,codeHash,fullName,result.score.toFixed(2).replace('.',','),String(result.total),String(result.correct),String(result.wrong))
++    if(save(nameKey,made.fullName))setLocked(true)
++    setCertificate(made)
++  }catch(cause){setError(String(cause))}finally{setBusy(false)}}
++  return <section className="certificate-block">
++    <h3>Результат для преподавателя</h3>
++    <p>Введите ФИО один раз для этой лекции. Отпечаток кода надёжно указывает, чем открыт доступ; имя подсказывает, кому принадлежит результат.</p>
++    {certificate
++      ? <><dl className="certificate-grid"><div><dt>Студент</dt><dd data-testid="certificate-name">{certificate.fullName}</dd></div><div><dt>Код лекции</dt><dd>{certificate.code}</dd></div><div><dt>Баллы</dt><dd>{certificate.score} из {certificate.total}</dd></div><div><dt>Верно / с ошибкой</dt><dd>{certificate.correct} / {certificate.wrong}</dd></div><div><dt>Подпись</dt><dd data-testid="certificate-signature">{certificate.signature}</dd></div></dl><p className="field-help">Покажите преподавателю эту таблицу на экране или сделайте снимок. Для проверки подписи преподаватель может запросить файл отчёта.</p><div className="dialog-actions"><button className="button ghost" type="button" onClick={()=>downloadJson(`result-${lecture.id}.json`,certificate)}>Скачать файл отчёта</button></div></>
++      : <form onSubmit={sign} className="certificate-form"><label>ФИО студента<input autoComplete="name" disabled={locked} aria-label="ФИО студента" placeholder="Иванов Иван Иванович" value={fullName} onChange={e=>setFullName(e.target.value)}/>{locked&&<small className="field-help">ФИО зафиксировано для этой лекции на этом устройстве.</small>}</label>{error&&<p role="alert" className="task-error">{error}</p>}<div className="dialog-actions"><button className="button primary" type="submit" disabled={busy||!fullName.trim()}>{busy?'Подписываем…':'Подписать результат'}</button></div></form>}
++  </section>
++}
+\ No newline at end of file
+diff --git a/src/engine/SlideView.tsx b/src/engine/SlideView.tsx
+index c01ac92..d86382b 100644
+--- a/src/engine/SlideView.tsx
++++ b/src/engine/SlideView.tsx
+@@ -6,7 +6,7 @@ import {TaskView} from './Assessment'
+ export function SlideView({course,lecture,slide,profile,base,number,interactive=false}:{course:Course;lecture:Lecture;slide:Slide;profile:Profile;base:string;number:number;interactive?:boolean}){
+  return <article className={`slide-frame kind-${slide.kind} ${slide.visual||slide.steps||slide.rows?'has-visual':''}`} data-slide-id={slide.id}>
+  <img className="side-ornament" src={assetUrl(course.ornament,base)} alt=""/>
+- <header className="slide-header"><div className="slide-brand"><img src={assetUrl(course.logo,base)} alt="Логотип"/><span>{course.code} · {lecture.semester}-й семестр</span></div><span className="slide-number">{String(number).padStart(2,'0')}</span></header>
++ <header className="slide-header"><div className="slide-brand"><img src={assetUrl(course.logo,base)} alt="Логотип"/><span>{course.code}</span></div><span className="slide-number">{String(number).padStart(2,'0')}</span></header>
+  <div className="slide-content"><div className="slide-copy"><p className="slide-kicker">{slide.kicker}</p><h2>{slide.title}</h2>
+  {(slide.kind==='literature'||slide.kind==='materials')&&<Resources course={course} slide={slide} base={base}/>}
+  {slide.kind==='agenda'&&<ol className="topic-agenda">{lecture.slides.filter(s=>s.kind==='section').map((s,i)=><li key={s.id}><span>{String(i+1).padStart(2,'0')}</span><strong>{s.title}</strong></li>)}</ol>}
+diff --git a/src/engine/access.ts b/src/engine/access.ts
+new file mode 100644
+index 0000000..25d05df
+--- /dev/null
++++ b/src/engine/access.ts
+@@ -0,0 +1,127 @@
++// Доступ к лекции по коду преподавателя и подписанный результат самопроверки.
++// В сборку попадают только хеши кодов и ключ подписи: это защищает от подмены ФИО
++// в чужом скриншоте, но не от целенаправленной подделки силами самого студента.
++export type AccessFile={
++  schemaVersion:number
++  courseId:string
++  contentVersion:string
++  certificateKey:string
++  lectures:Record<string,string[]>
++  // Хеш мастер-кода преподавателя: им снимается доступ на устройстве.
++  releaseHash?:string
++}
++export type Certificate={
++  courseId:string
++  contentVersion:string
++  lectureId:string
++  code:string
++  fullName:string
++  score:string
++  total:string
++  correct:string
++  wrong:string
++  timestamp:string
++  signature:string
++}
++const encoder=new TextEncoder()
++const alphabet='0123456789ABCDEFGHJKMNPQRSTVWXYZ'
++const hex=(buffer:ArrayBuffer)=>[...new Uint8Array(buffer)].map(x=>x.toString(16).padStart(2,'0')).join('')
++export const normalizeCode=(value:string)=>value.trim().toUpperCase().replace(/[^0-9A-Z]/g,'')
++export function toBase32(bytes:Uint8Array,length:number){
++  let value=0,bits=0,out=''
++  for(const byte of bytes){value=(value<<8)|byte;bits+=8;while(bits>=5){bits-=5;out+=alphabet[(value>>>bits)&31]}}
++  if(out.length<length)out+=alphabet[(value<<(5-bits))&31]
++  return out.slice(0,length)
++}
++async function hmac(key:string,message:string){
++  const material=await crypto.subtle.importKey('raw',encoder.encode(key),{name:'HMAC',hash:'SHA-256'},false,['sign'])
++  return new Uint8Array(await crypto.subtle.sign('HMAC',material,encoder.encode(message)))
++}
++export async function hashCode(code:string){return hex(await crypto.subtle.digest('SHA-256',encoder.encode(normalizeCode(code))))}
++export function certificatePayload(file:AccessFile,hash:string,lectureId:string,fullName:string,score:string,total:string,correct:string,wrong:string,timestamp:string){
++  return [file.courseId,file.contentVersion,lectureId,hash,fullName.trim().replace(/\s+/g,' '),score,total,correct,wrong,timestamp].join('|')
++}
++export async function signCertificate(file:AccessFile,hash:string,lectureId:string,fullName:string,score:string,total:string,correct:string,wrong:string,timestamp:string){
++  return toBase32(await hmac(file.certificateKey,certificatePayload(file,hash,lectureId,fullName,score,total,correct,wrong,timestamp)),24)
++}
++export async function makeCertificate(file:AccessFile,lectureId:string,hash:string,fullName:string,score:string,total:string,correct:string,wrong:string):Promise<Certificate>{
++  const name=fullName.trim().replace(/\s+/g,' ')
++  if(name.length<5)throw Error('Укажите фамилию, имя и отчество')
++  const timestamp=new Date().toISOString()
++  return {courseId:file.courseId,contentVersion:file.contentVersion,lectureId,code:hash.slice(0,4).toUpperCase(),fullName:name,score,total,correct,wrong,timestamp,signature:await signCertificate(file,hash,lectureId,name,score,total,correct,wrong,timestamp)}
++}
++// Доступ живёт недолго: за компьютером в аудитории каждый раз может сесть другой
++// человек, и ему нужен свой код, а не чужое сохранённое имя.
++export const UNLOCK_TTL_DAYS=7
++const DAY=86_400_000
++export type Unlock={hash:string;at:number}
++export type Unlocked=Record<string,Unlock>
++const unlockKey=(base:string,id:string)=>`lecture:${base}:${id}:unlocked`
++export const identityKey=(base:string,id:string,lectureId:string)=>`lecture:${base}:${id}:identity:${lectureId}`
++export function readUnlocked(base:string,id:string):Unlocked{
++  try{
++    const raw=JSON.parse(localStorage.getItem(unlockKey(base,id))||'null')
++    if(!raw||typeof raw!=='object'||Array.isArray(raw))return{}
++    const out:Unlocked={}
++    for(const [lectureId,value] of Object.entries(raw)){
++      if(value&&typeof value==='object'&&typeof (value as Unlock).hash==='string'&&typeof (value as Unlock).at==='number')out[lectureId]=value as Unlock
++    }
++    return out
++  }catch{return{}}
++}
++export function isFreshUnlock(unlock:Unlock|undefined,ttlDays=UNLOCK_TTL_DAYS){
++  if(!unlock||typeof unlock.hash!=='string')return false
++  return Date.now()-unlock.at<ttlDays*DAY
++}
++export function rememberUnlock(base:string,id:string,lectureId:string,hash:string){
++  const current=readUnlocked(base,id)
++  try{localStorage.setItem(unlockKey(base,id),JSON.stringify({...current,[lectureId]:{hash,at:Date.now()}}))}catch{/* устройство не сохраняет: код останется только в текущей вкладке */}
++}
++// Мастер-код преподавателя снимает доступ и зафиксированное имя на устройстве.
++export async function matchReleaseCode(file:AccessFile|null,code:string){
++  if(!file||typeof file.releaseHash!=='string')return false
++  if(!normalizeCode(code))return false
++  return (await hashCode(code))===file.releaseHash
++}
++// Смена человека на устройстве: снимаем и код, и зафиксированное имя.
++export function forgetLecture(base:string,id:string,lectureId:string){
++  const current=readUnlocked(base,id)
++  delete current[lectureId]
++  try{
++    localStorage.setItem(unlockKey(base,id),JSON.stringify(current))
++    localStorage.removeItem(identityKey(base,id,lectureId))
++  }catch{/* устройство не сохраняет */}
++}
++export function requiresCode(file:AccessFile|null,lectureId:string){
++  const list=file?.lectures[lectureId]
++  return Array.isArray(list)&&list.length>0
++}
++export function isUnlocked(file:AccessFile|null,unlocked:Unlocked,lectureId:string,ttlDays=UNLOCK_TTL_DAYS){
++  if(!requiresCode(file,lectureId))return true
++  return isFreshUnlock(unlocked[lectureId],ttlDays)
++}
++export async function loadAccessFile(url:string,base:string,id:string,version:string):Promise<AccessFile|null>{
++  try{
++    const response=await fetch(`${base}${url.replace(/^\//,'')}`)
++    if(!response.ok)return null
++    const file=await response.json()as AccessFile
++    if(!file||file.schemaVersion!==1||file.courseId!==id||file.contentVersion!==version||typeof file.certificateKey!=='string'||!file.lectures)return null
++    if(file.releaseHash!==undefined&&typeof file.releaseHash!=='string')return null
++    return file
++  }catch{return null}
++}
++export async function matchAccessCode(file:AccessFile,lectureId:string,code:string){
++  const list=file.lectures[lectureId]
++  if(!Array.isArray(list)||!list.length)return ''
++  if(!normalizeCode(code))return ''
++  const hash=await hashCode(code)
++  return list.includes(hash)?hash:''
++}
++// Проверка на стороне преподавателя: сверяет подпись с кодом из своего списка.
++export async function validateCertificate(file:AccessFile,certificate:Certificate,code:string){
++  if(certificate.courseId!==file.courseId||certificate.contentVersion!==file.contentVersion)return false
++  const hash=await hashCode(code)
++  if(certificate.code!==hash.slice(0,4).toUpperCase())return false
++  const expected=await signCertificate(file,hash,certificate.lectureId,certificate.fullName,certificate.score,certificate.total,certificate.correct,certificate.wrong,certificate.timestamp)
++  return expected===certificate.signature
++}
+\ No newline at end of file
+diff --git a/src/engine/assessment.css b/src/engine/assessment.css
+index 7a5828d..5edc546 100644
+--- a/src/engine/assessment.css
++++ b/src/engine/assessment.css
+@@ -1,3 +1,3 @@
+-.infographic{margin:1rem 0 0}.infographic svg{display:block;width:100%;max-height:37cqw;font-family:Raleway,Arial,sans-serif;overflow:visible}.infographic figcaption{margin-top:.4rem;font-size:1rem;line-height:1.4;color:#505058;border-left:3px solid #4561c8;padding-left:.7rem}.has-visual .slide-copy{max-width:100%}.mini-stage .infographic{margin-top:1.5cqw}.mini-stage .infographic figcaption{font-size:1.5cqw;margin-top:.4cqw;padding-left:1cqw}.mini-stage .infographic svg{max-height:31cqw}.interactive-task{margin-top:1rem}.task-prompt{font-size:1.2rem;font-weight:650;line-height:1.4;margin:.5rem 0 1rem}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}.choice-grid label{display:flex;align-items:center;gap:.65rem;border:1px solid #b9bbc2;border-radius:.65rem;padding:.75rem;font-size:1.04rem;line-height:1.35;background:#fff}.choice-grid label:has(input:checked){border-color:#4561c8;background:#eef1ff}.choice-grid input{accent-color:#4561c8;width:1.1rem;height:1.1rem;flex-shrink:0}.choice-grid b{font-size:1rem}.short-field{display:grid;gap:.6rem;font-weight:600;max-width:34rem}.short-field input,.matching-fields select{background:#fff;color:#1c1c1c;padding:.7rem .8rem;border:1px solid #9699a3;border-radius:.5rem;font-size:1.1rem;min-width:0}.matching-fields{display:grid;gap:.55rem}.matching-fields label{display:grid;grid-template-columns:1fr 1.5fr;gap:1rem;align-items:center;font-size:1.05rem}.task-actions{display:flex;align-items:center;flex-wrap:wrap;gap:.65rem;margin-top:1rem}.task-actions .button{font-size:.9rem;padding:.55rem .8rem;min-height:2.6rem}.task-actions .button.ghost{color:#333;border-color:#9699a3}.task-status{font-weight:750}.task-status.correct,.result-list .correct{color:#216200}.task-status.incorrect,.result-list .incorrect{color:#a8171c}.task-error{color:#a8171c;font-size:.9rem}.preserve-lines{white-space:pre-line}.result-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.result-summary>div{background:var(--surface-2);padding:1rem;border-radius:.6rem;display:grid;gap:.4rem}.result-summary b{font-size:2rem}.result-summary span{font-size:.9rem}.result-list{padding-left:1.2rem}.result-list>li{padding:1rem 0;border-top:1px solid var(--border)}.result-list .text-button{text-align:left;margin:0;font-weight:700}.result-list details{line-height:1.5}
++.infographic{margin:1rem 0 0}.infographic svg{display:block;width:100%;max-height:37cqw;font-family:Raleway,Arial,sans-serif;overflow:visible}.infographic figcaption{margin-top:.4rem;font-size:1rem;line-height:1.4;color:#505058;border-left:3px solid #4561c8;padding-left:.7rem}.has-visual .slide-copy{max-width:100%}.mini-stage .infographic{margin-top:1.5cqw}.mini-stage .infographic figcaption{font-size:1.5cqw;margin-top:.4cqw;padding-left:1cqw}.mini-stage .infographic svg{max-height:31cqw}.interactive-task{margin-top:1rem}.task-prompt{font-size:1.2rem;font-weight:650;line-height:1.4;margin:.5rem 0 1rem}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}.choice-grid label{display:flex;align-items:center;gap:.65rem;border:1px solid #b9bbc2;border-radius:.65rem;padding:.75rem;font-size:1.04rem;line-height:1.35;background:#fff}.choice-grid label:has(input:checked){border-color:#4561c8;background:#eef1ff}.choice-grid input{accent-color:#4561c8;width:1.1rem;height:1.1rem;flex-shrink:0}.choice-grid b{font-size:1rem}.short-field{display:grid;gap:.6rem;font-weight:600;max-width:34rem}.short-field input,.matching-fields select{background:#fff;color:#1c1c1c;padding:.7rem .8rem;border:1px solid #9699a3;border-radius:.5rem;font-size:1.1rem;min-width:0}.matching-fields{display:grid;gap:.55rem}.matching-fields label{display:grid;grid-template-columns:1fr 1.5fr;gap:1rem;align-items:center;font-size:1.05rem}.task-actions{display:flex;align-items:center;flex-wrap:wrap;gap:.65rem;margin-top:1rem}.task-actions .button{font-size:.9rem;padding:.55rem .8rem;min-height:2.6rem}.certificate-block{margin-top:1.4rem;padding:1.1rem 1.2rem;border:1px solid #b9bbc2;border-left:.34rem solid #4561c8;border-radius:.75rem;background:#fff;display:grid;gap:.6rem}.certificate-block h3{margin:0;font-size:1.05rem}.certificate-block>p{margin:0;font-size:.92rem;color:#505058;line-height:1.45}.certificate-form{display:grid;gap:.8rem}.certificate-form>label{display:grid;gap:.4rem;font-weight:650}.certificate-form input{border:1px solid #9699a3;border-radius:.5rem;padding:.7rem .8rem;font-size:1.05rem;background:#fff;color:#1c1c1c}.certificate-form input:disabled{background:#ececf0;color:#505058}.certificate-grid{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.6rem}.certificate-grid>div{padding:.55rem .65rem;border-radius:.55rem;background:#f4f4f6;min-width:0}.certificate-grid dt{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#505058}.certificate-grid dd{margin:.15rem 0 0;font-weight:750;font-size:.95rem;overflow-wrap:anywhere}.task-actions .button.ghost{color:#333;border-color:#9699a3}.task-status{font-weight:750}.task-status.correct,.result-list .correct{color:#216200}.task-status.incorrect,.result-list .incorrect{color:#a8171c}.task-error{color:#a8171c;font-size:.9rem}.preserve-lines{white-space:pre-line}.result-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.result-summary>div{background:var(--surface-2);padding:1rem;border-radius:.6rem;display:grid;gap:.4rem}.result-summary b{font-size:2rem}.result-summary span{font-size:.9rem}.result-list{padding-left:1.2rem}.result-list>li{padding:1rem 0;border-top:1px solid var(--border)}.result-list .text-button{text-align:left;margin:0;font-weight:700}.result-list details{line-height:1.5}
+ @media(max-width:820px){.infographic svg{max-height:none}.infographic{overflow-x:auto}.infographic svg{min-width:580px}.mini-stage .infographic svg{min-width:0;max-height:31cqw}.infographic figcaption{font-size:.9rem}.mini-stage .infographic figcaption{font-size:1.5cqw}.choice-grid{grid-template-columns:1fr}.matching-fields label{grid-template-columns:1fr;gap:.3rem}.slide-copy:has(.infographic){overflow:visible}.audience-slide .infographic svg{min-width:0}}
+ @media print{.infographic svg{min-width:0;max-height:31cqw}.infographic{overflow:visible}}
+diff --git a/src/engine/index.ts b/src/engine/index.ts
+index b9688eb..b30facb 100644
+--- a/src/engine/index.ts
++++ b/src/engine/index.ts
+@@ -1,4 +1,5 @@
+ export { LectureSite } from './LectureSite'
++export { validateCertificate } from './access'
+ export { Infographic } from './Infographic'
+ export { validateCourse, TEMPLATE_VERSION } from './model'
+ export type { Course, Lecture, Slide, TeacherPack, Note } from './model'
+diff --git a/src/engine/model.ts b/src/engine/model.ts
+index 367d90c..4f29d29 100644
+--- a/src/engine/model.ts
++++ b/src/engine/model.ts
+@@ -19,7 +19,7 @@ export type Task = {id:string;type:'single'|'multiple'|'short'|'matching';prompt
+ export type Reading = {citation:string;url?:string}
+ export type Slide = {id:string;kind:'title'|'theory'|'notebook'|'process'|'comparison'|'example'|'warning'|'test'|'summary'|'literature'|'materials'|'section'|'questions'|'agenda';readingGroup?:'primary'|'additional';references?:Reading[];title:string;kicker:string;body?:string;notebook?:string;bullets?:string[];visual?:Visual;steps?:{title:string;text:string}[];columns?:string[];rows?:string[][];task?:Task;source?:string}
+ export type Lecture = {id:string;title:string;sourceTitle:string;semester:number;question:string;slides:Slide[]}
+-export type Course = {schemaVersion:1;contentVersion:string;id:string;code:string;discipline:string;year:string;heroTitle:string;heroAccent:string;slogan:string;mascot:string;mascotAlt:string;logo:string;ornament:string;font:string;materialsUrl:string;teacherNotesUrl?:string;teacherNotesPreviousVersions?:string[];topicArrow?:string;literature?:{primary:Reading[];additional:Reading[]};assessment?:{mode:'autonomous';url:string};demo:boolean;semesters:number[];lectures:Lecture[]}
++export type Course = {schemaVersion:1;contentVersion:string;id:string;code:string;discipline:string;year:string;teacher?:string;heroTitle:string;heroAccent:string;slogan:string;mascot:string;mascotAlt:string;logo:string;ornament:string;font:string;materialsUrl:string;accessCodesUrl?:string;teacherNotesUrl?:string;teacherNotesPreviousVersions?:string[];topicArrow?:string;literature?:{primary:Reading[];additional:Reading[]};assessment?:{mode:'autonomous';url:string};demo:boolean;semesters:number[];lectures:Lecture[]}
+ export type Note = {script:string;preparation:string;notebook:string;questions:string;answer:string;estimatedSeconds:number}
+ export type TeacherPack = {schemaVersion:1;courseId:string;contentVersion:string;notes:Record<string,Note>}
+ export const emptyNote = ():Note => ({script:'',preparation:'',notebook:'',questions:'',answer:'',estimatedSeconds:120})
+diff --git a/src/engine/reference.css b/src/engine/reference.css
+index bbb3fb8..35a42f8 100644
+--- a/src/engine/reference.css
++++ b/src/engine/reference.css
+@@ -91,21 +91,14 @@ img { max-width: 100%; }
+ .catalog-tools { max-width: 92rem; margin: 1.4rem auto; padding: 0.8rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--surface); display: flex; gap: 0.7rem; align-items: center; box-shadow: 0 0.8rem 2.2rem rgb(28 28 28 / 0.06); }
+ .search-field { flex: 1 1 23rem; display: flex; align-items: center; gap: 0.65rem; padding: 0 0.85rem; border: 1px solid var(--border); border-radius: 0.75rem; background: var(--surface-2); }
+ .search-field input { width: 100%; min-height: 2.65rem; border: 0; color: var(--text); background: transparent; }
+-.semester-filter { display: flex; gap: 0.35rem; padding: 0.25rem; border-radius: 0.75rem; background: var(--surface-2); }
+-.semester-filter button { border: 0; border-radius: 0.6rem; padding: 0.65rem 0.8rem; color: var(--muted); background: transparent; font-weight: 750; }
+-.semester-filter button.active { color: #fff; background: var(--black); }
+-.materials-link { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.7rem 0.8rem; border-radius: 0.7rem; color: var(--text); text-decoration: none; font-weight: 750; }
++
+ 
+ .topic-grid { max-width: 92rem; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+ .topic-card { min-height: 21rem; padding: 1.5rem; border: 1px solid var(--border); border-radius: 1.25rem; background: var(--surface); display: flex; flex-direction: column; box-shadow: 0 0.8rem 2rem rgb(28 28 28 / 0.055); position: relative; overflow: hidden; }
+ .topic-card::after { content: ''; position: absolute; right: -2rem; bottom: -2rem; width: 7rem; height: 7rem; border: 1.2rem solid rgb(237 19 28 / 0.1); border-radius: 50%; }
+-.topic-card.semester-7 { border-top: 0.28rem solid var(--red); }
+-.topic-card.semester-8 { border-top: 0.28rem solid var(--blue); }
+-.topic-card.semester-8 .topic-index { color: var(--blue); }
+-.topic-card.semester-8::after { border-color: rgb(69 97 200 / 0.12); }
+-.topic-card-top { display: flex; align-items: center; justify-content: space-between; }
++.topic-card-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+ .topic-index { font-size: 2rem; font-weight: 900; color: var(--red); }
+-.semester-tag { padding: 0.35rem 0.6rem; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: 0.75rem; font-weight: 800; }
++.locked-tag { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.35rem 0.6rem; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: 0.75rem; font-weight: 800; }
+ .topic-card h2 { margin: 1.3rem 0 0.75rem; font-size: clamp(1.35rem, 2vw, 1.85rem); line-height: 1.05; letter-spacing: -0.025em; }
+ .topic-card > p { margin: 0; color: var(--muted); line-height: 1.48; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+ .topic-card-footer { margin-top: auto; padding-top: 1.2rem; position: relative; z-index: 1; }
+@@ -367,9 +360,7 @@ dialog::backdrop { background: rgb(10 10 12 / 0.7); backdrop-filter: blur(0.25re
+   .chevron-backdrop { inset: 1rem -5rem -5rem 3rem; }
+   .hero-mascot img { right: 50%; bottom: -1rem; width: 32rem; transform: translateX(50%); }
+   .catalog-tools { align-items: stretch; }
+-  .semester-filter { overflow-x: auto; }
+-  .semester-filter button { white-space: nowrap; }
+-  .materials-link { margin-left: auto; }
++  
+   .deck-shell { min-height: 100dvh; height: auto; overflow-y: auto; grid-template-rows: auto auto auto auto; }
+   .deck-toolbar { flex-wrap: wrap; }
+   .deck-topic { order: 3; flex-basis: 100%; text-align: left; }
+@@ -414,7 +405,7 @@ dialog::backdrop { background: rgb(10 10 12 / 0.7); backdrop-filter: blur(0.25re
+   .catalog-tools { padding: 0.6rem; }
+   .profile-downloads > div { display: grid; grid-template-columns: 1fr; }
+   .profile-downloads .button { width: 100%; }
+-  .materials-link { width: 100%; justify-content: center; }
++  
+   .topic-grid { grid-template-columns: 1fr; }
+   .topic-card { min-height: 18rem; }
+   .topic-card > p { -webkit-line-clamp: 4; }
+diff --git a/src/engine/template.css b/src/engine/template.css
+index f51ae68..7d0e06d 100644
+--- a/src/engine/template.css
++++ b/src/engine/template.css
+@@ -1,9 +1,9 @@
+ /* Template 0.1.0: explicit overrides of the audited OKFKS reference. */
+-:root{font-family:Raleway,Arial,sans-serif}body{font-size:16px}.button.primary{background:var(--red-dark)}.button,.icon-button{font-weight:700}.icon-button{flex-shrink:0;border-radius:.65rem}.brand-lockup small{white-space:normal;max-width:44rem;font-size:.88rem}.catalog-header .settings-button{white-space:nowrap}.teacher-summary strong{font-size:1.2rem}.teacher-summary small{font-size:1rem}.teacher-summary span,.eyebrow{font-size:.85rem}.hero-copy h1{font-size:clamp(3rem,5.3vw,5.8rem)}.hero-mascot img{width:min(39rem,43vw);bottom:-2.7rem;right:-2.6rem}.topic-card.period-0{border-top:.28rem solid var(--red)}.topic-card.period-1{border-top:.28rem solid var(--blue)}.topic-card.period-1 .topic-index{color:var(--blue)}.topic-card.period-1::after{border-color:rgb(69 97 200 / .12)}.topic-card h2{line-height:1.15}.topic-card-actions .button{font-size:.9rem}.topic-card>p{display:block;overflow:visible}.topic-card{min-height:21rem}.semester-tag{font-size:.85rem}.materials-link{border:0;background:transparent;white-space:nowrap}.toolbar-actions{gap:.35rem}.deck-controls{grid-template-columns:auto auto 1fr}.deck-controls>.button:last-child{justify-self:end}.deck-topic span{font-size:.85rem}.active-slide{container-type:inline-size}.slide-frame{color-scheme:light;border-color:#d4d5da}.slide-copy{max-width:100%}.slide-footer{font-size:.72rem;gap:1rem}.slide-footer>span{max-width:48%}.title-profile{display:grid;gap:.3rem;margin-top:1.6rem}.title-profile strong{font-size:1.5rem}.title-profile span{font-size:1rem;color:#ddd}.title-mascot{position:absolute;right:0;bottom:-1rem;width:44%;height:103%;object-fit:contain;z-index:2}.kind-title .slide-copy{max-width:60%}.process-steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);padding:0;margin:1.5rem 0 0;gap:1.2rem}.process-steps li{border-top:3px solid var(--red);padding:1rem 0;position:relative}.process-steps li>span{display:block;font-size:2rem;font-weight:800;color:var(--red-dark);margin-bottom:.7rem}.process-steps strong{font-size:1.3rem}.process-steps p{font-size:1.15rem;line-height:1.4}.comparison-table{width:100%;border-collapse:collapse;margin-top:1.5rem;font-size:1.15rem;line-height:1.4}.comparison-table th{text-align:left;background:var(--black);color:white}.comparison-table td,.comparison-table th{padding:.8rem 1rem;border-bottom:1px solid #d4d5da}.comparison-table tr:nth-child(even){background:#f4f4f6}.public-task>p{font-size:1.3rem;font-weight:650;line-height:1.4}.public-options{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.7rem}.public-options li{display:flex;align-items:center;gap:.8rem;padding:.7rem;border:1px solid #d4d5da;border-radius:.6rem;font-size:1.1rem}.public-options b{background:#ececf0;border-radius:.4rem;padding:.4rem .55rem}.matching-public{display:grid;grid-template-columns:1fr 1fr;gap:2rem;font-size:1.15rem;line-height:1.8}.answer-line{padding:1rem 0;font-size:1.2rem}.side-ornament{pointer-events:none}.kind-test .side-ornament,.has-visual .side-ornament{opacity:.07}.template-dialog{width:min(92vw,46rem);max-height:88dvh;padding:1.7rem;border:1px solid var(--border);border-radius:1.2rem;background:var(--surface);color:var(--text);overflow-y:auto;box-shadow:var(--shadow)}.template-dialog::backdrop{background:rgb(0 0 0 / .5);backdrop-filter:blur(4px)}.template-dialog h2{font-size:1.7rem}.template-dialog p{line-height:1.5}.settings-form{display:grid;gap:1rem}.settings-form>label{display:grid;gap:.4rem;font-weight:650}.settings-form input,.note-editor,.notes-duration input{border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:.5rem;padding:.8rem;width:100%}.field-help{font-size:.88rem;color:var(--muted);margin:0}.profile-downloads>div{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem}.teaching-start{border-top:1px solid var(--border);padding-top:1rem}.toc-list{list-style:none;padding:0;margin:1rem 0}.toc-list button{display:flex;text-align:left;gap:.8rem;width:100%;padding:.8rem;border:0;border-bottom:1px solid var(--border);background:transparent;color:var(--text);font-size:1rem;line-height:1.4}.toc-list button b{min-width:1.5rem;color:var(--muted)}.toc-list button[aria-current]{background:var(--red-dark);color:white;border-radius:.5rem}.toc-list button[aria-current] b{color:white}.floating-notice{position:fixed;bottom:1rem;right:1rem;z-index:99;background:var(--surface);padding:1rem;border:1px solid var(--border);border-radius:.8rem;max-width:30rem;box-shadow:var(--shadow)}.motion-on .active-slide,.motion-on .audience-slide{animation:slide-in .28s ease-out}.motion-on .slide-copy>*{animation:element-in .34s ease-out both}.motion-on .slide-copy>*:nth-child(2){animation-delay:40ms}.motion-on .slide-copy>*:nth-child(3){animation-delay:100ms}.motion-on .slide-copy>*:nth-child(4){animation-delay:160ms}@keyframes slide-in{from{opacity:.6;transform:translateX(14px)}to{opacity:1;transform:none}}@keyframes element-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
++:root{font-family:Raleway,Arial,sans-serif}body{font-size:16px}.button.primary{background:var(--red-dark)}.button,.icon-button{font-weight:700}.icon-button{flex-shrink:0;border-radius:.65rem}.brand-lockup small{white-space:normal;max-width:44rem;font-size:.88rem}.teacher-summary strong{font-size:1.2rem}.teacher-summary small{font-size:1rem}.teacher-summary span,.eyebrow{font-size:.85rem}.hero-copy h1{font-size:clamp(3rem,5.3vw,5.8rem)}.hero-mascot img{width:min(39rem,43vw);bottom:-2.7rem;right:-2.6rem}.topic-card h2{line-height:1.15}.topic-card-actions .button{font-size:.9rem}.topic-card>p{display:block;overflow:visible}.topic-card{min-height:21rem}.toolbar-actions{gap:.35rem}.deck-controls{grid-template-columns:auto auto 1fr}.deck-controls>.button:last-child{justify-self:end}.active-slide{container-type:inline-size}.slide-frame{color-scheme:light;border-color:#d4d5da}.slide-copy{max-width:100%}.slide-footer{font-size:.72rem;gap:1rem}.slide-footer>span{max-width:48%}.title-profile{display:grid;gap:.3rem;margin-top:1.6rem}.title-profile strong{font-size:1.5rem}.title-profile span{font-size:1rem;color:#ddd}.title-mascot{position:absolute;right:0;bottom:-1rem;width:44%;height:103%;object-fit:contain;z-index:2}.kind-title .slide-copy{max-width:60%}.process-steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);padding:0;margin:1.5rem 0 0;gap:1.2rem}.process-steps li{border-top:3px solid var(--red);padding:1rem 0;position:relative}.process-steps li>span{display:block;font-size:2rem;font-weight:800;color:var(--red-dark);margin-bottom:.7rem}.process-steps strong{font-size:1.3rem}.process-steps p{font-size:1.15rem;line-height:1.4}.comparison-table{width:100%;border-collapse:collapse;margin-top:1.5rem;font-size:1.15rem;line-height:1.4}.comparison-table th{text-align:left;background:var(--black);color:white}.comparison-table td,.comparison-table th{padding:.8rem 1rem;border-bottom:1px solid #d4d5da}.comparison-table tr:nth-child(even){background:#f4f4f6}.public-task>p{font-size:1.3rem;font-weight:650;line-height:1.4}.public-options{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.7rem}.public-options li{display:flex;align-items:center;gap:.8rem;padding:.7rem;border:1px solid #d4d5da;border-radius:.6rem;font-size:1.1rem}.public-options b{background:#ececf0;border-radius:.4rem;padding:.4rem .55rem}.matching-public{display:grid;grid-template-columns:1fr 1fr;gap:2rem;font-size:1.15rem;line-height:1.8}.answer-line{padding:1rem 0;font-size:1.2rem}.side-ornament{pointer-events:none}.kind-test .side-ornament,.has-visual .side-ornament{opacity:.07}.template-dialog{width:min(92vw,46rem);max-height:88dvh;padding:1.7rem;border:1px solid var(--border);border-radius:1.2rem;background:var(--surface);color:var(--text);overflow-y:auto;box-shadow:var(--shadow)}.template-dialog::backdrop{background:rgb(0 0 0 / .5);backdrop-filter:blur(4px)}.template-dialog h2{font-size:1.7rem}.template-dialog p{line-height:1.5}.settings-form{display:grid;gap:1rem}.settings-form>label{display:grid;gap:.4rem;font-weight:650}.settings-form input,.note-editor,.notes-duration input{border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:.5rem;padding:.8rem;width:100%}.field-help{font-size:.88rem;color:var(--muted);margin:0}.profile-downloads>div{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem}.teaching-start{border-top:1px solid var(--border);padding-top:1rem}.toc-list{list-style:none;padding:0;margin:1rem 0}.toc-list button{display:flex;text-align:left;gap:.8rem;width:100%;padding:.8rem;border:0;border-bottom:1px solid var(--border);background:transparent;color:var(--text);font-size:1rem;line-height:1.4}.toc-list button b{min-width:1.5rem;color:var(--muted)}.toc-list button[aria-current]{background:var(--red-dark);color:white;border-radius:.5rem}.toc-list button[aria-current] b{color:white}.floating-notice{position:fixed;bottom:1rem;right:1rem;z-index:99;background:var(--surface);padding:1rem;border:1px solid var(--border);border-radius:.8rem;max-width:30rem;box-shadow:var(--shadow)}.motion-on .active-slide,.motion-on .audience-slide{animation:slide-in .28s ease-out}.motion-on .slide-copy>*{animation:element-in .34s ease-out both}.motion-on .slide-copy>*:nth-child(2){animation-delay:40ms}.motion-on .slide-copy>*:nth-child(3){animation-delay:100ms}.motion-on .slide-copy>*:nth-child(4){animation-delay:160ms}@keyframes slide-in{from{opacity:.6;transform:translateX(14px)}to{opacity:1;transform:none}}@keyframes element-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+ .presenter-shell{padding:1.2rem;min-height:100dvh;background:var(--surface-2)}.presenter-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}.presenter-header>div{flex:1}.presenter-header .eyebrow{margin-bottom:.3rem}.presenter-header h1{font-size:1.5rem;margin:0}.connection{font-size:.9rem;padding:.6rem .8rem;border-radius:2rem;background:var(--surface);border:1px solid var(--border)}.connection.connected{color:#176000;background:#eef9eb;border-color:#b7d8aa}.presenter-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.15fr) minmax(190px,.55fr);gap:1rem;align-items:start}.presenter-notes,.presenter-outline,.presenter-preview{min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:1rem;padding:1rem}.preview-label{display:flex;gap:.8rem;justify-content:space-between;margin-bottom:.65rem;font-size:.87rem}.preview-label span{color:var(--muted)}.mini-stage{aspect-ratio:16/9;container-type:inline-size}.mini-stage .slide-frame{box-shadow:none;border-radius:.65rem}.mini-stage .slide-header{min-height:0;padding:2cqw 3cqw}.mini-stage .slide-brand{font-size:1.4cqw;gap:1cqw}.mini-stage .slide-brand img{width:4cqw;height:4cqw}.mini-stage .slide-number{font-size:2cqw}.mini-stage .slide-content{padding:3cqw 5cqw}.mini-stage .slide-copy h2{font-size:4.2cqw}.mini-stage .slide-kicker{font-size:1.6cqw;margin-bottom:1cqw}.mini-stage .slide-body-copy{font-size:2.3cqw;line-height:1.4;margin-top:2cqw}.mini-stage .slide-footer{min-height:0;padding:1cqw 3cqw;font-size:1.3cqw}.mini-stage .title-profile{margin-top:3cqw;gap:.4cqw}.mini-stage .title-profile strong{font-size:2.7cqw}.mini-stage .title-profile span{font-size:1.8cqw}.mini-stage .write-note{margin-top:2cqw;padding:2cqw}.mini-stage .write-note span{font-size:1.5cqw}.mini-stage .write-note strong{font-size:2.3cqw}.mini-stage .process-steps{margin-top:2cqw;gap:2cqw}.mini-stage .process-steps li{padding:1cqw 0}.mini-stage .process-steps li>span{font-size:3cqw;margin-bottom:1cqw}.mini-stage .process-steps strong,.mini-stage .process-steps p,.mini-stage .comparison-table{font-size:2.2cqw}.mini-stage .comparison-table{margin-top:2cqw}.mini-stage td,.mini-stage th{padding:1cqw}.mini-stage ul{font-size:2.2cqw;margin-top:2cqw;gap:1cqw}.mini-stage .public-task>p{font-size:2.4cqw}.mini-stage .public-options{gap:1cqw;padding:0}.mini-stage .public-options li{font-size:1.9cqw;padding:1cqw;gap:1cqw}.mini-stage .public-options b{padding:.6cqw}.mini-stage .matching-public,.mini-stage .answer-line{font-size:2.1cqw}.preview-black .slide-frame{filter:brightness(.2)}.next-stage{max-width:72%;margin:auto}.presenter-controls,.session-tools{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}.presenter-controls .button,.session-tools .button{font-size:.9rem;padding:.55rem .8rem}.timer{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;padding-top:.8rem;border-top:1px solid var(--border)}.timer>strong{font-variant-numeric:tabular-nums;font-size:1.7rem}.timer>span{font-size:.85rem;color:var(--muted);flex:1}.notes-heading{display:flex;align-items:start;gap:.6rem}.notes-heading>div{flex:1}.notes-heading h2{font-size:1.2rem;line-height:1.3;margin:0 0 .8rem}.notes-heading .eyebrow{font-size:.72rem;margin-bottom:.4rem}.note-tabs{display:flex;overflow-x:auto;border-bottom:1px solid var(--border);margin-top:.8rem}.note-tabs button{border:0;background:none;color:var(--muted);padding:.8rem .6rem;font-size:.9rem}.note-tabs .active{color:var(--red-dark);box-shadow:inset 0 -3px var(--red-dark);font-weight:700}.note-font{display:flex;align-items:center;gap:1rem;margin:.9rem 0;font-size:.85rem}.note-font input{min-width:0;flex:1}.note-reader,.note-editor{height:48dvh;min-height:16rem;overflow-y:auto;white-space:pre-wrap;line-height:1.65;padding:.7rem .3rem}.note-editor{padding:.8rem;resize:vertical}.notes-empty h3{font-size:1.2rem}.notes-empty p{font-size:1rem}.notes-files{display:flex;flex-wrap:wrap;gap:.5rem;padding-top:1rem}.notes-files .button{font-size:.85rem}.notes-duration{display:flex;align-items:center;gap:1rem;font-size:.85rem;margin-top:1rem}.notes-duration input{width:6rem;padding:.5rem}.presenter-outline{max-height:calc(100dvh - 7rem);overflow-y:auto}.presenter-outline .search-field{padding:0 .5rem}.presenter-outline .toc-list button{font-size:.85rem;padding:.65rem .2rem}.text-button{border:0;background:none;color:inherit;text-decoration:underline;margin-left:1rem}.audience-shell{width:100vw;height:100dvh;display:grid;place-items:center;background:#080808;overflow:hidden}.audience-slide{width:min(100vw,calc(100dvh * 16 / 9));aspect-ratio:16/9;container-type:inline-size}.audience-slide .slide-frame{border-radius:0;box-shadow:none;border:0}.audience-fullscreen{position:fixed;bottom:1rem;right:1rem;z-index:10}.black-screen{position:absolute;inset:0;background:#000}.print-page{width:13.333in;height:7.5in;margin:1rem auto;break-after:page;container-type:inline-size}.print-hint{display:flex;justify-content:center;gap:1rem;padding:1rem}.print-page .slide-frame{border-radius:0;box-shadow:none;border:0}.print-document{overflow:auto}.print-page:last-child{break-after:auto}
+ @media(max-width:1100px){.presenter-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.presenter-outline{grid-column:1/-1;max-height:20rem}.deck-toolbar{flex-wrap:wrap}.deck-topic{order:0}.toolbar-actions{margin-left:auto}.active-slide{width:min(100%,calc((100dvh - 12rem)*16/9))}}
+-@media(max-width:820px){.brand-lockup small{max-width:24rem}.settings-button span{display:none}.hero-mascot img{width:min(36rem,90vw);right:0;bottom:-5rem}.hero-mascot{min-height:24rem}.deck-shell{height:auto;min-height:100dvh;overflow:visible}.active-slide{width:100%;aspect-ratio:auto;max-height:none}.slide-frame{min-height:32rem;height:auto}.slide-content{overflow:visible}.slide-copy{overflow:visible}.deck-controls{grid-template-columns:auto auto 1fr;position:sticky;bottom:0;background:var(--surface-2);padding:.6rem 0}.toolbar-actions{width:100%;justify-content:flex-end;flex-wrap:wrap}.process-steps{grid-template-columns:1fr}.public-options{grid-template-columns:1fr}.presenter-grid{grid-template-columns:1fr}.presenter-outline{grid-column:auto}.presenter-header{flex-wrap:wrap}.presenter-header h1{font-size:1.2rem}.mini-stage .slide-frame{min-height:0;height:100%}.mini-stage .process-steps{grid-template-columns:repeat(3,1fr)}.mini-stage .public-options{grid-template-columns:1fr 1fr}.audience-slide .slide-frame{min-height:0;height:100%}.audience-slide .process-steps{grid-template-columns:repeat(3,1fr)}}
+-@media(max-width:560px){.catalog-header .brand-lockup small{display:none}.catalog-hero{padding:2rem 1.5rem}.hero-copy h1{font-size:3.15rem}.hero-lead{font-size:1.15rem}.hero-mascot{min-height:19rem}.hero-mascot img{bottom:-3rem;right:-1rem;width:95vw}.catalog-tools{align-items:stretch}.semester-filter{overflow-x:auto}.semester-filter button{white-space:nowrap}.topic-card-actions{flex-direction:column;align-items:stretch}.topic-card-actions .button{width:100%}.kind-title .slide-copy{max-width:100%}.title-mascot{position:relative;width:100%;height:17rem;margin-top:1rem}.slide-content{display:block}.matching-public{gap:.5rem;font-size:1rem}.template-dialog{padding:1rem;width:96vw}.template-dialog h2{font-size:1.3rem}.toolbar-actions{gap:.3rem;justify-content:center}.deck-topic{text-align:left}.deck-toolbar>.button{font-size:.85rem}.deck-controls .button{padding:.7rem}.presenter-shell{padding:.65rem}.mini-stage .title-mascot{position:absolute;width:44%;height:103%;margin:0}.mini-stage .kind-title .slide-copy{max-width:60%}}
++@media(max-width:820px){.brand-lockup small{max-width:24rem}.hero-mascot img{width:min(36rem,90vw);right:0;bottom:-5rem}.hero-mascot{min-height:24rem}.deck-shell{height:auto;min-height:100dvh;overflow:visible}.active-slide{width:100%;aspect-ratio:auto;max-height:none}.slide-frame{min-height:32rem;height:auto}.slide-content{overflow:visible}.slide-copy{overflow:visible}.deck-controls{grid-template-columns:auto auto 1fr;position:sticky;bottom:0;background:var(--surface-2);padding:.6rem 0}.toolbar-actions{width:100%;justify-content:flex-end;flex-wrap:wrap}.process-steps{grid-template-columns:1fr}.public-options{grid-template-columns:1fr}.presenter-grid{grid-template-columns:1fr}.presenter-outline{grid-column:auto}.presenter-header{flex-wrap:wrap}.presenter-header h1{font-size:1.2rem}.mini-stage .slide-frame{min-height:0;height:100%}.mini-stage .process-steps{grid-template-columns:repeat(3,1fr)}.mini-stage .public-options{grid-template-columns:1fr 1fr}.audience-slide .slide-frame{min-height:0;height:100%}.audience-slide .process-steps{grid-template-columns:repeat(3,1fr)}}
++@media(max-width:560px){.catalog-header .brand-lockup small{display:none}.catalog-hero{padding:2rem 1.5rem}.hero-copy h1{font-size:3.15rem}.hero-lead{font-size:1.15rem}.hero-mascot{min-height:19rem}.hero-mascot img{bottom:-3rem;right:-1rem;width:95vw}.catalog-tools{align-items:stretch}.topic-card-actions{flex-direction:column;align-items:stretch}.topic-card-actions .button{width:100%}.kind-title .slide-copy{max-width:100%}.title-mascot{position:relative;width:100%;height:17rem;margin-top:1rem}.slide-content{display:block}.matching-public{gap:.5rem;font-size:1rem}.template-dialog{padding:1rem;width:96vw}.template-dialog h2{font-size:1.3rem}.toolbar-actions{gap:.3rem;justify-content:center}.deck-topic{text-align:left}.deck-toolbar>.button{font-size:.85rem}.deck-controls .button{padding:.7rem}.presenter-shell{padding:.65rem}.mini-stage .title-mascot{position:absolute;width:44%;height:103%;margin:0}.mini-stage .kind-title .slide-copy{max-width:60%}}
+ @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+ @media print{@page{size:13.333in 7.5in;margin:0}html,body{margin:0!important;padding:0!important;background:white!important;width:13.333in!important;overflow:visible!important}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}.print-hint{display:none!important}.print-page{margin:0!important;width:13.333in;height:7.5in;overflow:hidden}.print-page .slide-frame{width:100%;height:100%;min-height:0}.print-page .slide-content{display:grid;overflow:visible}.print-page .kind-title .slide-copy{max-width:60%}.print-page .title-mascot{position:absolute;width:44%;height:103%;margin:0}.print-page .process-steps{grid-template-columns:repeat(3,1fr)}.print-page .public-options{grid-template-columns:1fr 1fr}*{animation:none!important;transition:none!important}}
+ .kind-title .side-ornament{display:none}

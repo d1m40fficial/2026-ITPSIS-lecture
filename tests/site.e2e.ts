@@ -1,20 +1,39 @@
 import { expect, test } from '@playwright/test'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import type { Course } from '@olgakraven/lecture-engine'
 const course: Course = JSON.parse(readFileSync('public/course.json', 'utf8'))
 const bank = JSON.parse(readFileSync('public/assessment.json', 'utf8'))
+const access = JSON.parse(readFileSync('public/access-codes.json', 'utf8'))
 
-test('catalog, preserved topics, search and semester filters', async ({ page }) => {
+// Коды преподавателя не публикуются. Локально тесты используют его файл,
+// в CI — тестовый набор из tests/fixtures. В CI проверяется всё, кроме входа по настоящему коду.
+const codesPath = existsSync('config/access-codes.json') ? 'config/access-codes.json' : 'tests/fixtures/access-codes.json'
+const teacherCodes = JSON.parse(readFileSync(codesPath, 'utf8'))
+const plaintextAvailable = codesPath.startsWith('config/')
+const sha256 = (value: string) => createHash('sha256').update(value.trim().toUpperCase().replace(/[^0-9A-Z]/g, ''), 'utf8').digest('hex')
+const codeOf = (id: string) => (plaintextAvailable ? teacherCodes.lectures[id][0] : '')
+const masterOf = () => (plaintextAvailable ? teacherCodes.releaseCode : '')
+const hashOf = (id: string) => (plaintextAvailable ? sha256(codeOf(id)) : sha256(`synthetic-${id}`))
+
+const unlock = async (page: import('@playwright/test').Page, lectureId: string) => {
+  if (!page.url().startsWith('http')) await page.goto('./')
+  await page.evaluate(([id, hash]) => {
+    localStorage.setItem('lecture:/2026-ITPSIS-lecture/:itpsis:unlocked', JSON.stringify({ [id]: { hash, at: Date.now() } }))
+  }, [lectureId, hashOf(lectureId)])
+}
+
+test('catalog, search and no semester division or teacher-only controls', async ({ page }) => {
   await page.goto('./')
   await expect(page.locator('.topic-card')).toHaveCount(15)
-  for (const semester of course.semesters) {
-    await page.getByRole('button', { name: `${semester} семестр`, exact: true }).click()
-    await expect(page.locator('.topic-card')).toHaveCount(semester === 7 ? 10 : 5)
-  }
-  await page.getByRole('button', { name: 'Все темы', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Все темы', exact: true })).toHaveCount(0)
+  await expect(page.locator('.semester-filter,.semester-tag')).toHaveCount(0)
+  await expect(page.getByRole('button', { name: 'Настройка перед занятием', exact: true })).toHaveCount(0)
+  await expect(page.getByRole('button', { name: 'Прикрепить материалы', exact: true })).toHaveCount(0)
+  await expect(page.locator('.topic-card').first().locator('.locked-tag')).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Сохранить PDF', exact: true })).toHaveCount(0)
   await page.getByRole('textbox', { name: 'Поиск по темам' }).fill('резервного')
   await expect(page.locator('.topic-card')).toHaveCount(1)
-  await expect(page.getByRole('link', { name: 'Материалы', exact: true })).toHaveAttribute('href', course.materialsUrl)
 })
 
 test('responsive catalog and slides fit wide, laptop and mobile screens', async ({ page }) => {
@@ -26,6 +45,7 @@ test('responsive catalog and slides fit wide, laptop and mobile screens', async 
     const lecture = course.lectures[0]
     for (const kind of ['title', 'theory', 'notebook', 'process', 'test']) {
       const slide = lecture.slides.find(s => s.kind === kind)!
+      await unlock(page, lecture.id)
       await page.goto(`./?lecture=${lecture.id}&slide=${slide.id}`)
       await expect(page.locator('.active-slide .slide-frame')).toHaveAttribute('data-slide-id', slide.id)
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1)).toBe(true)
@@ -35,6 +55,7 @@ test('responsive catalog and slides fit wide, laptop and mobile screens', async 
 
 test('legacy links, keyboard navigation, stable IDs and end navigation', async ({ page }) => {
   const l = course.lectures[0]
+  await unlock(page, l.id)
   await page.goto(`./?topic=${l.id}&slide=1`)
   await expect(page.locator('.slide-counter')).toHaveText(`1 / ${l.slides.length}`)
   await page.keyboard.press('ArrowRight')
@@ -71,6 +92,7 @@ test('all print pages fit their regions and have no private notes or attempts', 
 
 test('four assessment types, empty attempt, retry and restoration', async ({ page }) => {
   const l = course.lectures[0]
+  await unlock(page, l.id)
   for (const s of l.slides.filter(s => s.task).slice(0, 4)) {
     const t = s.task!, key = bank.keys[t.id]
     await page.goto(`./?lecture=${l.id}&slide=${s.id}`)
@@ -89,24 +111,132 @@ test('four assessment types, empty attempt, retry and restoration', async ({ pag
   }
 })
 
-test('two windows, independent preview, black screen and audience privacy', async ({ page }) => {
+test('locked lecture rejects a wrong code and never shows slides', async ({ page }) => {
   const l = course.lectures[0]
+  expect(access.lectures[l.id]?.length).toBeGreaterThan(0)
+  await page.goto('./')
+  const card = page.locator('.topic-card', { hasText: l.sourceTitle }).first()
+  await card.getByRole('button', { name: 'Открыть', exact: true }).click()
+  await expect(page.getByRole('dialog', { name: 'Доступ к лекции' })).toBeVisible()
+  await expect(page.locator('.active-slide')).toHaveCount(0)
+  await page.getByRole('textbox', { name: 'Код доступа' }).fill('WRONG-CODE-000')
+  await page.getByRole('button', { name: 'Открыть лекцию', exact: true }).click()
+  await expect(page.getByRole('alert')).toContainText('Код не подходит')
+  await expect(page.locator('.active-slide')).toHaveCount(0)
+})
+
+test('teacher code opens the lecture once and stays open', async ({ page }) => {
+  test.skip(!plaintextAvailable, 'настоящие коды доступны только при файле преподавателя')
+  const l = course.lectures[0]
+  await page.goto('./')
+  const card = page.locator('.topic-card', { hasText: l.sourceTitle }).first()
+  await card.getByRole('button', { name: 'Открыть', exact: true }).click()
+  await page.getByRole('textbox', { name: 'Код доступа' }).fill(codeOf(l.id))
+  await page.getByRole('button', { name: 'Открыть лекцию', exact: true }).click()
+  await expect(page.locator('.active-slide .slide-frame')).toBeVisible()
+  await page.getByRole('button', { name: 'Каталог', exact: true }).click()
+  await card.getByRole('button', { name: 'Открыть', exact: true }).click()
+  await expect(page.locator('.active-slide .slide-frame')).toBeVisible()
+})
+
+test('releasing access requires the teacher master code', async ({ page }) => {
+  const l = course.lectures[0]
+  await page.goto('./')
+  const card = page.locator('.topic-card', { hasText: l.sourceTitle }).first()
+  await unlock(page, l.id)
+  await page.reload()
+  await card.getByRole('button', { name: 'Открыть', exact: true }).click()
+  await expect(page.locator('.active-slide .slide-frame')).toBeVisible()
+  await page.getByRole('button', { name: 'Каталог', exact: true }).click()
+  await card.getByRole('button', { name: 'Освободить доступ', exact: true }).click()
+  await expect(page.getByRole('dialog', { name: 'Освободить доступ' })).toBeVisible()
+  await page.getByRole('textbox', { name: 'Мастер-код' }).fill('WRONG-MASTER-0')
+  await page.getByRole('button', { name: 'Снять доступ', exact: true }).click()
+  await expect(page.getByRole('alert')).toContainText('Мастер-код не подходит')
+  await page.getByRole('button', { name: 'Отмена', exact: true }).click()
+  await card.getByRole('button', { name: 'Открыть', exact: true }).click()
+  await expect(page.locator('.active-slide .slide-frame')).toBeVisible()
+})
+
+test('master code clears access and lets the next student enter their own name', async ({ page }) => {
+  test.skip(!plaintextAvailable, 'настоящие коды доступны только при файле преподавателя')
+  const l = course.lectures[0]
+  const bank = JSON.parse(readFileSync('public/assessment.json', 'utf8'))
+  await page.goto('./')
+  const card = page.locator('.topic-card', { hasText: l.sourceTitle }).first()
+  const sign = async (name: string) => {
+    const s = l.slides.find(x => x.task)!
+    const t = s.task!, key = bank.keys[t.id]
+    await page.goto(`./?lecture=${l.id}&slide=${s.id}`)
+    // Попытка могла сохраниться от первого студента — начинаем заново.
+    const retry = page.getByRole('button', { name: 'Ещё попытка', exact: true })
+    if (await retry.count()) await retry.click()
+    if (t.type === 'single' || t.type === 'multiple') {
+      for (const id of key.correct) await page.locator('.choice-grid label').filter({ hasText: t.options!.find(o => o.id === id)!.text }).locator('input').check()
+    } else if (t.type === 'short') await page.locator('.short-field input').fill(key.accepted[0])
+    else for (const [i, item] of t.items!.entries()) await page.locator('.matching-fields select').nth(i).selectOption(key.pairs[item.id])
+    await page.getByRole('button', { name: 'Проверить', exact: true }).click()
+    await page.getByRole('button', { name: 'Результаты самопроверки', exact: true }).click()
+    await page.getByRole('textbox', { name: 'ФИО студента' }).fill(name)
+    await page.getByRole('button', { name: 'Подписать результат', exact: true }).click()
+    await expect(page.getByTestId('certificate-name')).toHaveText(name)
+  }
+  await card.getByRole('button', { name: 'Открыть', exact: true }).click()
+  await page.getByRole('textbox', { name: 'Код доступа' }).fill(codeOf(l.id))
+  await page.getByRole('button', { name: 'Открыть лекцию', exact: true }).click()
+  await page.locator('.active-slide .slide-frame').waitFor()
+  await sign('Первый Студент Первыйович')
+  await page.goto('./')
+  await card.getByRole('button', { name: 'Освободить доступ', exact: true }).click()
+  await page.getByRole('textbox', { name: 'Мастер-код' }).fill(masterOf())
+  await page.getByRole('button', { name: 'Снять доступ', exact: true }).click()
+  await expect(page.locator('.floating-notice')).toContainText('сняты')
+  await page.goto('./')
+  await card.getByRole('button', { name: 'Открыть', exact: true }).click()
+  await expect(page.getByRole('dialog', { name: 'Доступ к лекции' })).toBeVisible()
+  await page.getByRole('textbox', { name: 'Код доступа' }).fill(codeOf(l.id))
+  await page.getByRole('button', { name: 'Открыть лекцию', exact: true }).click()
+  await page.locator('.active-slide .slide-frame').waitFor()
+  await sign('Второй Студент Вторович')
+})
+
+test('access granted more than a week ago asks for the code again', async ({ page }) => {
+  const l = course.lectures[1]
+  await page.goto('./')
+  await page.evaluate(([id, hash]) => {
+    const stale = Date.now() - 8 * 86_400_000
+    localStorage.setItem('lecture:/2026-ITPSIS-lecture/:itpsis:unlocked', JSON.stringify({ [id]: { hash, at: stale } }))
+  }, [l.id, hashOf(l.id)])
+  await page.reload()
+  await page.locator('.topic-card', { hasText: l.sourceTitle }).first().getByRole('button', { name: 'Открыть', exact: true }).click()
+  await expect(page.getByRole('dialog', { name: 'Доступ к лекции' })).toBeVisible()
+})
+
+test('direct link to a locked lecture asks for the code', async ({ page }) => {
+  const l = course.lectures[2]
   await page.goto(`./?lecture=${l.id}&slide=${l.slides[0].id}`)
-  const popup = page.waitForEvent('popup')
-  await page.getByRole('button', { name: 'Начать занятие в двух окнах', exact: true }).click()
-  const audience = await popup
-  await expect(audience.locator('.slide-frame')).toHaveAttribute('data-slide-id', l.slides[0].id)
-  await page.getByRole('button', { name: 'Вперёд', exact: true }).click()
-  await expect(audience.locator('.slide-frame')).toHaveAttribute('data-slide-id', l.slides[1].id)
-  await page.locator('.toc-list button').nth(4).click()
-  await expect(audience.locator('.slide-frame')).toHaveAttribute('data-slide-id', l.slides[1].id)
-  await page.getByRole('button', { name: 'Показать аудитории', exact: true }).click()
-  await expect(audience.locator('.slide-frame')).toHaveAttribute('data-slide-id', l.slides[4].id)
-  await page.getByRole('button', { name: 'Чёрный экран', exact: true }).click()
-  await expect(audience.locator('.black-screen')).toBeVisible()
-  await page.getByRole('button', { name: 'Вернуть слайд', exact: true }).click()
-  await audience.reload()
-  await expect(audience.locator('.slide-frame')).toHaveAttribute('data-slide-id', l.slides[4].id)
-  const resources = await audience.evaluate(() => performance.getEntriesByType('resource').map(e => e.name))
-  expect(resources.some(url => url.includes('assessment.json') || url.includes('teacher-pack'))).toBe(false)
+  await expect(page.getByRole('dialog', { name: 'Доступ к лекции' })).toBeVisible()
+  await expect(page.locator('.active-slide')).toHaveCount(0)
+})
+
+test('self-check result carries the student name in a signature', async ({ page }) => {
+  const l = course.lectures[0]
+  await unlock(page, l.id)
+  const s = l.slides.find(x => x.task)!
+  const t = s.task!, key = bank.keys[t.id]
+  await page.goto(`./?lecture=${l.id}&slide=${s.id}`)
+  if (t.type === 'single' || t.type === 'multiple') {
+    for (const id of key.correct) await page.locator('.choice-grid label').filter({ hasText: t.options!.find(o => o.id === id)!.text }).locator('input').check()
+  } else if (t.type === 'short') await page.locator('.short-field input').fill(key.accepted[0])
+  else for (const [i, item] of t.items!.entries()) await page.locator('.matching-fields select').nth(i).selectOption(key.pairs[item.id])
+  await page.getByRole('button', { name: 'Проверить', exact: true }).click()
+  await page.getByRole('button', { name: 'Результаты самопроверки', exact: true }).click()
+  await expect(page.locator('.certificate-block')).toBeVisible()
+  await page.getByRole('textbox', { name: 'ФИО студента' }).fill('Петров Пётр Петрович')
+  await page.getByRole('button', { name: 'Подписать результат', exact: true }).click()
+  await expect(page.getByTestId('certificate-name')).toHaveText('Петров Пётр Петрович')
+  expect(await page.getByTestId('certificate-signature').innerText()).toMatch(/^[0-9A-Z]{24}$/)
+  await page.reload()
+  await page.getByRole('button', { name: 'Результаты самопроверки', exact: true }).click()
+  await expect(page.getByRole('textbox', { name: 'ФИО студента' })).toBeDisabled()
 })

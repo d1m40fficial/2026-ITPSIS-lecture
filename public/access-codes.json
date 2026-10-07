@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "courseId": "itpsis",
+  "contentVersion": "2026-09-12-itil-4",
+  "certificateKey": "b7f3a9c14e2d80653af1c7e940b62d5813fa0c47e9b25d83610af47c2e93b581",
+  "releaseHash": "75c34fa30e755911400692890722e3722ae6eb351b8314065b83617e35e31923",
+  "lectures": {
+    "s07-01-support-lifecycle": [
+      "61847c8a4b85970a187d22da71b944e310e8c6ed29ca598b92e2478a1e7d5e60"
+    ],
+    "s07-02-support-levels": [
+      "a498ddfa219a9f5394928177b060911fd433f7c4e961108829499b505efb1ca0"
+    ],
+    "s07-03-sla": [
+      "f37bb8cfa63c4928e21c09c4c42849b233700699cae6ab3c27375cfcc006ed39"
+    ],
+    "s07-04-ticket-flow": [
+      "f56eedd708895eb20b1fae9706794b19fc9a6d13ad73b114c321e0bc25b340fe"
+    ],
+    "s07-05-reproduction": [
+      "c244f096f2dc65966121af4c3a764775af31484f7bb3530b225536fe09d793aa"
+    ],
+    "s07-06-escalation": [
+      "ec2277f5b44ac0177e3253fffe3b2dc026938bed86e03d995f67ccef2b250c9f"
+    ],
+    "s07-07-knowledge-base": [
+      "524e8b8077f5927048b01d42ddf3ac3146cc003284b2fffe385dfd0296ee0037"
+    ],
+    "s07-08-update-regulation": [
+      "fdefafc2f8b2c739c4f79a2fb66514f71beddc8b464fc59b69f726d180f26bb2"
+    ],
+    "s07-09-change-management": [
+      "5fb0e56619eff1f135aa6f8939af4eb9bd82d20566ed55b458a1f3bd25632f1a"
+    ],
+    "s07-10-backup-restore": [
+      "ba0642ec1c3955ccd0cc6bc01a40ba8dcc1213aa7f9f12b4d61b30eccb2b794c"
+    ],
+    "s08-01-failure-response": [
+      "a001b142e487dcb986cb4b422fe35d15a56eea0355cc41e47282ef78ef47aa92"
+    ],
+    "s08-02-error-collection": [
+      "280d47badbbe9fdfc0fe8b5c60423e152dbd6241a6527995e01bd913b6912c47"
+    ],
+    "s08-03-layer-localization": [
+      "b45d8892cc7fdd6f8de660b6abeb70bcb1a6f779d6b5369412b38bf01a408ef8"
+    ],
+    "s08-04-postmortem": [
+      "7342ecbad8c5144c8e0737b89dc6e9df34f56fcd3c5f9687558e503d56392d52"
+    ],
+    "s08-05-hardware-maintenance": [
+      "7f509ab1f8e0ec2a06bd4a43f08513bf055d971f1f0d15083e2da8064f206d93"
+    ]
+  }
+}

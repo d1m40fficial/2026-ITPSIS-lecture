@@ -3,7 +3,10 @@ import {mkdir,readFile,writeFile} from 'node:fs/promises';
 const course=JSON.parse(await readFile('public/course.json','utf8'));
 const pack=JSON.parse(await readFile('authoring/teacher-notes.json','utf8'));
 assert.equal(pack.schemaVersion,1);assert.equal(pack.courseId,course.id);assert.equal(pack.contentVersion,course.contentVersion);
-const slides=course.lectures.flatMap(l=>l.slides);assert.equal(Object.keys(pack.notes).length,slides.length);
+// Заметки — канонические данные и хранят записи для слайдов, которых больше нет в курсе.
+// Требуем заметку для каждого существующего слайда; лишние записи не мешают.
+const slides=course.lectures.flatMap(l=>l.slides);assert.ok(Object.keys(pack.notes).length>=slides.length,'в пакете заметок меньше записей, чем слайдов курса');
+for(const s of slides)assert.ok(pack.notes[s.id],'нет заметки для '+s.id);
 const fields=['script','preparation','notebook','questions','answer'];
 for(const s of slides){const n=pack.notes[s.id];assert.ok(n,s.id);for(const f of fields)assert.ok(typeof n[f]==='string'&&n[f].trim(),`${s.id}: ${f}`);assert.ok(Number.isFinite(n.estimatedSeconds)&&n.estimatedSeconds>0);}
 assert.ok(!JSON.stringify(pack).includes('ITPSIS_PRIVATE_SCRIPT_20260912'));

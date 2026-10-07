@@ -2,7 +2,7 @@
   "s07-01-support-lifecycle": {
     "1": "s07-01-support-lifecycle-title",
     "2": "s07-01-support-lifecycle-agenda",
-    "3": "s07-01-support-lifecycle-literature-1",
+    "3": "s07-01-support-lifecycle-sources",
     "4": "s07-01-support-lifecycle-next",
     "5": "s07-01-support-lifecycle-case",
     "6": "s07-01-support-lifecycle-intro",
@@ -89,7 +89,7 @@
   "s07-02-support-levels": {
     "1": "s07-02-support-levels-title",
     "2": "s07-02-support-levels-agenda",
-    "3": "s07-02-support-levels-literature-1",
+    "3": "s07-02-support-levels-sources",
     "4": "s07-02-support-levels-next",
     "5": "s07-02-support-levels-case",
     "6": "s07-02-support-levels-intro",
@@ -176,7 +176,7 @@
   "s07-03-sla": {
     "1": "s07-03-sla-title",
     "2": "s07-03-sla-agenda",
-    "3": "s07-03-sla-literature-1",
+    "3": "s07-03-sla-sources",
     "4": "s07-03-sla-next",
     "5": "s07-03-sla-case",
     "6": "s07-03-sla-intro",
@@ -263,7 +263,7 @@
   "s07-04-ticket-flow": {
     "1": "s07-04-ticket-flow-title",
     "2": "s07-04-ticket-flow-agenda",
-    "3": "s07-04-ticket-flow-literature-1",
+    "3": "s07-04-ticket-flow-sources",
     "4": "s07-04-ticket-flow-next",
     "5": "s07-04-ticket-flow-case",
     "6": "s07-04-ticket-flow-intro",
@@ -350,7 +350,7 @@
   "s07-05-reproduction": {
     "1": "s07-05-reproduction-title",
     "2": "s07-05-reproduction-agenda",
-    "3": "s07-05-reproduction-literature-1",
+    "3": "s07-05-reproduction-sources",
     "4": "s07-05-reproduction-next",
     "5": "s07-05-reproduction-case",
     "6": "s07-05-reproduction-intro",
@@ -437,7 +437,7 @@
   "s07-06-escalation": {
     "1": "s07-06-escalation-title",
     "2": "s07-06-escalation-agenda",
-    "3": "s07-06-escalation-literature-1",
+    "3": "s07-06-escalation-sources",
     "4": "s07-06-escalation-next",
     "5": "s07-06-escalation-case",
     "6": "s07-06-escalation-intro",
@@ -524,7 +524,7 @@
   "s07-07-knowledge-base": {
     "1": "s07-07-knowledge-base-title",
     "2": "s07-07-knowledge-base-agenda",
-    "3": "s07-07-knowledge-base-literature-1",
+    "3": "s07-07-knowledge-base-sources",
     "4": "s07-07-knowledge-base-next",
     "5": "s07-07-knowledge-base-case",
     "6": "s07-07-knowledge-base-intro",
@@ -611,7 +611,7 @@
   "s07-08-update-regulation": {
     "1": "s07-08-update-regulation-title",
     "2": "s07-08-update-regulation-agenda",
-    "3": "s07-08-update-regulation-literature-1",
+    "3": "s07-08-update-regulation-sources",
     "4": "s07-08-update-regulation-next",
     "5": "s07-08-update-regulation-case",
     "6": "s07-08-update-regulation-intro",
@@ -698,7 +698,7 @@
   "s07-09-change-management": {
     "1": "s07-09-change-management-title",
     "2": "s07-09-change-management-agenda",
-    "3": "s07-09-change-management-literature-1",
+    "3": "s07-09-change-management-sources",
     "4": "s07-09-change-management-next",
     "5": "s07-09-change-management-case",
     "6": "s07-09-change-management-intro",
@@ -785,7 +785,7 @@
   "s07-10-backup-restore": {
     "1": "s07-10-backup-restore-title",
     "2": "s07-10-backup-restore-agenda",
-    "3": "s07-10-backup-restore-literature-1",
+    "3": "s07-10-backup-restore-sources",
     "4": "s07-10-backup-restore-next",
     "5": "s07-10-backup-restore-case",
     "6": "s07-10-backup-restore-intro",
@@ -872,7 +872,7 @@
   "s08-01-failure-response": {
     "1": "s08-01-failure-response-title",
     "2": "s08-01-failure-response-agenda",
-    "3": "s08-01-failure-response-literature-1",
+    "3": "s08-01-failure-response-sources",
     "4": "s08-01-failure-response-next",
     "5": "s08-01-failure-response-case",
     "6": "s08-01-failure-response-intro",
@@ -959,7 +959,7 @@
   "s08-02-error-collection": {
     "1": "s08-02-error-collection-title",
     "2": "s08-02-error-collection-agenda",
-    "3": "s08-02-error-collection-literature-1",
+    "3": "s08-02-error-collection-sources",
     "4": "s08-02-error-collection-next",
     "5": "s08-02-error-collection-case",
     "6": "s08-02-error-collection-intro",
@@ -1046,7 +1046,7 @@
   "s08-03-layer-localization": {
     "1": "s08-03-layer-localization-title",
     "2": "s08-03-layer-localization-agenda",
-    "3": "s08-03-layer-localization-literature-1",
+    "3": "s08-03-layer-localization-sources",
     "4": "s08-03-layer-localization-next",
     "5": "s08-03-layer-localization-case",
     "6": "s08-03-layer-localization-intro",
@@ -1133,7 +1133,7 @@
   "s08-04-postmortem": {
     "1": "s08-04-postmortem-title",
     "2": "s08-04-postmortem-agenda",
-    "3": "s08-04-postmortem-literature-1",
+    "3": "s08-04-postmortem-sources",
     "4": "s08-04-postmortem-next",
     "5": "s08-04-postmortem-case",
     "6": "s08-04-postmortem-intro",
@@ -1220,7 +1220,7 @@
   "s08-05-hardware-maintenance": {
     "1": "s08-05-hardware-maintenance-title",
     "2": "s08-05-hardware-maintenance-agenda",
-    "3": "s08-05-hardware-maintenance-literature-1",
+    "3": "s08-05-hardware-maintenance-sources",
     "4": "s08-05-hardware-maintenance-next",
     "5": "s08-05-hardware-maintenance-case",
     "6": "s08-05-hardware-maintenance-intro",

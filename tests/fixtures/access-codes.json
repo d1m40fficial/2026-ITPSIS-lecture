@@ -1,0 +1,51 @@
+{
+  "releaseCode": "MST-CI-TEST-0001",
+  "secret": "ci0000000000000000000000000000000000000000000000000000000000fixture",
+  "lectures": {
+    "s07-01-support-lifecycle": [
+      "ITP-CI01-TEST-0001"
+    ],
+    "s07-02-support-levels": [
+      "ITP-CI02-TEST-0002"
+    ],
+    "s07-03-sla": [
+      "ITP-CI03-TEST-0003"
+    ],
+    "s07-04-ticket-flow": [
+      "ITP-CI04-TEST-0004"
+    ],
+    "s07-05-reproduction": [
+      "ITP-CI05-TEST-0005"
+    ],
+    "s07-06-escalation": [
+      "ITP-CI06-TEST-0006"
+    ],
+    "s07-07-knowledge-base": [
+      "ITP-CI07-TEST-0007"
+    ],
+    "s07-08-update-regulation": [
+      "ITP-CI08-TEST-0008"
+    ],
+    "s07-09-change-management": [
+      "ITP-CI09-TEST-0009"
+    ],
+    "s07-10-backup-restore": [
+      "ITP-CI10-TEST-0010"
+    ],
+    "s08-01-failure-response": [
+      "ITP-CI11-TEST-0011"
+    ],
+    "s08-02-error-collection": [
+      "ITP-CI12-TEST-0012"
+    ],
+    "s08-03-layer-localization": [
+      "ITP-CI13-TEST-0013"
+    ],
+    "s08-04-postmortem": [
+      "ITP-CI14-TEST-0014"
+    ],
+    "s08-05-hardware-maintenance": [
+      "ITP-CI15-TEST-0015"
+    ]
+  }
+}

@@ -4,16 +4,18 @@
   "id": "itpsis",
   "code": "МДК.06.02",
   "discipline": "Инженерно-техническая поддержка сопровождения информационных систем",
-  "year": "не указан",
+  "year": "2026/2027",
   "heroTitle": "Поддержка и сопровождение",
   "heroAccent": "информационных систем",
   "slogan": "Понимать услугу. Находить причины. Восстанавливать работу.",
+  "teacher": "Белоусов Д. И.",
   "mascot": "brand/mascot/okfks-rhino-catalog.png",
   "mascotAlt": "Носорог — специалист инженерно-технической поддержки",
   "logo": "brand/synergy-logo.png",
   "ornament": "brand/side-ornament.png",
   "font": "fonts/raleway-cyrillic.woff2",
   "materialsUrl": "https://disk.yandex.ru/d/jfdIENXO7WUADQ",
+  "accessCodesUrl": "access-codes.json",
   "teacherNotesUrl": "teacher-notes/{lectureId}.json",
   "teacherNotesPreviousVersions": [
     "2026-09-12-itil-3",
@@ -87,62 +89,9 @@
           "id": "s07-01-support-lifecycle-title",
           "kind": "title",
           "title": "Сопровождение информационной системы",
-          "kicker": "7-й семестр",
+          "kicker": "Сопровождение информационной системы",
           "body": "Определить задачи, участников и договорные границы сопровождения действующей информационной системы",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s07-01-support-lifecycle-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Сопровождение информационной системы",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-01-support-lifecycle-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Сопровождение информационной системы",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-01-support-lifecycle-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Сопровождение информационной системы",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — ITIL: практики и версии",
-              "url": "https://www.peoplecert.org/ITIL-4"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s07-01-support-lifecycle-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Сопровождение информационной системы",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s07-01-support-lifecycle-agenda",
@@ -2241,62 +2190,9 @@
           "id": "s07-02-support-levels-title",
           "kind": "title",
           "title": "Уровни поддержки и работа службы",
-          "kicker": "7-й семестр",
+          "kicker": "Уровни поддержки и работа службы",
           "body": "Настроить уровни поддержки, очередь обращений и каналы связи без потери контекста",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s07-02-support-levels-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Уровни поддержки и работа службы",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-02-support-levels-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Уровни поддержки и работа службы",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-02-support-levels-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Уровни поддержки и работа службы",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — практики поддержки и взаимодействие ITSM",
-              "url": "https://atv.peoplecert.org/itsm-tool-capabilities-and-itil-service-delivery/"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s07-02-support-levels-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Уровни поддержки и работа службы",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s07-02-support-levels-agenda",
@@ -4395,62 +4291,9 @@
           "id": "s07-03-sla-title",
           "kind": "title",
           "title": "Соглашение об уровне обслуживания",
-          "kicker": "7-й семестр",
+          "kicker": "Соглашение об уровне обслуживания",
           "body": "Составить измеримое SLA с матрицей приоритетов и порядком разбора нарушений",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s07-03-sla-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Соглашение об уровне обслуживания",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-03-sla-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Соглашение об уровне обслуживания",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-03-sla-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Соглашение об уровне обслуживания",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — ITIL 4 Service Level Management",
-              "url": "https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil-4-practitioner-service-level-management-3867"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s07-03-sla-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Соглашение об уровне обслуживания",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s07-03-sla-agenda",
@@ -6550,62 +6393,9 @@
           "id": "s07-04-ticket-flow-title",
           "kind": "title",
           "title": "Обработка обращений пользователей",
-          "kicker": "7-й семестр",
+          "kicker": "Обработка обращений пользователей",
           "body": "Провести обращение от приёма до подтверждённого закрытия с корректным типом и приоритетом",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s07-04-ticket-flow-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Обработка обращений пользователей",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-04-ticket-flow-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Обработка обращений пользователей",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-04-ticket-flow-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Обработка обращений пользователей",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — ITIL 4 Incident Management",
-              "url": "https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil4-practices-incident-management-3684"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s07-04-ticket-flow-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Обработка обращений пользователей",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s07-04-ticket-flow-agenda",
@@ -8692,62 +8482,9 @@
           "id": "s07-05-reproduction-title",
           "kind": "title",
           "title": "Воспроизведение проблемы",
-          "kicker": "7-й семестр",
+          "kicker": "Воспроизведение проблемы",
           "body": "Собрать сведения и построить безопасный минимальный сценарий воспроизведения",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s07-05-reproduction-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Воспроизведение проблемы",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-05-reproduction-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Воспроизведение проблемы",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-05-reproduction-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Воспроизведение проблемы",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — ITIL 4 Problem Management",
-              "url": "https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil4-practices-problem-management-3688"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s07-05-reproduction-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Воспроизведение проблемы",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s07-05-reproduction-agenda",
@@ -10849,62 +10586,9 @@
           "id": "s07-06-escalation-title",
           "kind": "title",
           "title": "Эскалация и передача обращения",
-          "kicker": "7-й семестр",
+          "kicker": "Эскалация и передача обращения",
           "body": "Выбрать основание и адресата эскалации, сохранив контекст и ответственность",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s07-06-escalation-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Эскалация и передача обращения",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-06-escalation-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Эскалация и передача обращения",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-06-escalation-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Эскалация и передача обращения",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — практики поддержки и взаимодействие ITSM",
-              "url": "https://atv.peoplecert.org/itsm-tool-capabilities-and-itil-service-delivery/"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s07-06-escalation-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Эскалация и передача обращения",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s07-06-escalation-agenda",
@@ -13004,62 +12688,9 @@
           "id": "s07-07-knowledge-base-title",
           "kind": "title",
           "title": "База знаний службы поддержки",
-          "kicker": "7-й семестр",
+          "kicker": "База знаний службы поддержки",
           "body": "Создать понятную статью базы знаний и определить её жизненный цикл",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s07-07-knowledge-base-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "База знаний службы поддержки",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-07-knowledge-base-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "База знаний службы поддержки",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-07-knowledge-base-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "База знаний службы поддержки",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — ITIL: практики и версии",
-              "url": "https://www.peoplecert.org/ITIL-4"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s07-07-knowledge-base-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "База знаний службы поддержки",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s07-07-knowledge-base-agenda",
@@ -15159,62 +14790,9 @@
           "id": "s07-08-update-regulation-title",
           "kind": "title",
           "title": "Регламент обновления системы",
-          "kicker": "7-й семестр",
+          "kicker": "Регламент обновления системы",
           "body": "Разработать последовательный регламент обновления с безопасным откатом",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s07-08-update-regulation-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Регламент обновления системы",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-08-update-regulation-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Регламент обновления системы",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-08-update-regulation-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Регламент обновления системы",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — ITIL 4 Change Enablement",
-              "url": "https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil-4-practitioner-change-enablement-3794"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s07-08-update-regulation-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Регламент обновления системы",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s07-08-update-regulation-agenda",
@@ -17314,62 +16892,9 @@
           "id": "s07-09-change-management-title",
           "kind": "title",
           "title": "Управление изменениями",
-          "kicker": "7-й семестр",
+          "kicker": "Управление изменениями",
           "body": "Оформить изменение, оценить влияние и провести его через согласование и контроль",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s07-09-change-management-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Управление изменениями",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-09-change-management-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Управление изменениями",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-09-change-management-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Управление изменениями",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — ITIL 4 Change Enablement",
-              "url": "https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil-4-practitioner-change-enablement-3794"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s07-09-change-management-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Управление изменениями",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s07-09-change-management-agenda",
@@ -19470,62 +18995,9 @@
           "id": "s07-10-backup-restore-title",
           "kind": "title",
           "title": "Резервное копирование и восстановление",
-          "kicker": "7-й семестр",
+          "kicker": "Резервное копирование и восстановление",
           "body": "Определить состав, расписание и проверку резервного копирования для конкретной системы",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s07-10-backup-restore-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Резервное копирование и восстановление",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-10-backup-restore-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Резервное копирование и восстановление",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s07-10-backup-restore-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Резервное копирование и восстановление",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — ITIL: практики и версии",
-              "url": "https://www.peoplecert.org/ITIL-4"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s07-10-backup-restore-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Резервное копирование и восстановление",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s07-10-backup-restore-agenda",
@@ -21625,62 +21097,9 @@
           "id": "s08-01-failure-response-title",
           "kind": "title",
           "title": "Отказ системы и порядок реагирования",
-          "kicker": "8-й семестр",
+          "kicker": "Отказ системы и порядок реагирования",
           "body": "Классифицировать отказ, организовать реакцию и подтвердить восстановление услуги",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s08-01-failure-response-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Отказ системы и порядок реагирования",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s08-01-failure-response-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Отказ системы и порядок реагирования",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s08-01-failure-response-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Отказ системы и порядок реагирования",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — ITIL 4 Incident Management",
-              "url": "https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil4-practices-incident-management-3684"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s08-01-failure-response-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Отказ системы и порядок реагирования",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s08-01-failure-response-agenda",
@@ -23780,62 +23199,9 @@
           "id": "s08-02-error-collection-title",
           "kind": "title",
           "title": "Сбор сведений об ошибках",
-          "kicker": "8-й семестр",
+          "kicker": "Сбор сведений об ошибках",
           "body": "Организовать безопасный сбор сведений и восстановить путь ошибочного запроса",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s08-02-error-collection-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Сбор сведений об ошибках",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s08-02-error-collection-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Сбор сведений об ошибках",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s08-02-error-collection-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Сбор сведений об ошибках",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — каталог практик мониторинга и поддержки",
-              "url": "https://www.peoplecert.org/browse-certifications/it-governance-and-service-management"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s08-02-error-collection-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Сбор сведений об ошибках",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s08-02-error-collection-agenda",
@@ -25922,62 +25288,9 @@
           "id": "s08-03-layer-localization-title",
           "kind": "title",
           "title": "Локализация отказа по слоям",
-          "kicker": "8-й семестр",
+          "kicker": "Локализация отказа по слоям",
           "body": "Определить неисправный слой по наблюдаемым признакам и проверяемым гипотезам",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s08-03-layer-localization-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Локализация отказа по слоям",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s08-03-layer-localization-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Локализация отказа по слоям",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s08-03-layer-localization-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Локализация отказа по слоям",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — практики конфигурации, активов и развёртывания",
-              "url": "https://atv.peoplecert.org/itsm-tool-capabilities-and-itil-service-delivery/"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s08-03-layer-localization-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Локализация отказа по слоям",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s08-03-layer-localization-agenda",
@@ -28077,62 +27390,9 @@
           "id": "s08-04-postmortem-title",
           "kind": "title",
           "title": "Разбор отказа после устранения",
-          "kicker": "8-й семестр",
+          "kicker": "Разбор отказа после устранения",
           "body": "Восстановить доказательную хронологию и сформировать предупреждающие меры",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s08-04-postmortem-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Разбор отказа после устранения",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s08-04-postmortem-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Разбор отказа после устранения",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s08-04-postmortem-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Разбор отказа после устранения",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — ITIL 4 Problem Management",
-              "url": "https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil4-practices-problem-management-3688"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s08-04-postmortem-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Разбор отказа после устранения",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s08-04-postmortem-agenda",
@@ -30232,62 +29492,9 @@
           "id": "s08-05-hardware-maintenance-title",
           "kind": "title",
           "title": "Техническое обслуживание оборудования",
-          "kicker": "8-й семестр",
+          "kicker": "Техническое обслуживание оборудования",
           "body": "Организовать учёт состояния оборудования и безопасные плановые работы",
           "source": "Исходный курс · авторский учебный пример"
-        },
-        {
-          "id": "s08-05-hardware-maintenance-literature-1",
-          "kind": "literature",
-          "title": "Основная литература: 1",
-          "kicker": "Техническое обслуживание оборудования",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Владыко И. Ю., Сибирская Е. В. Программное обеспечение управления проектами / под ред. Е. В. Сибирской. Москва: Университет «Синергия», 2025. 144 с. ISBN 978-5-4257-0670-6.",
-              "url": "https://www.iprbookshop.ru/books/156717/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s08-05-hardware-maintenance-literature-2",
-          "kind": "literature",
-          "title": "Основная литература: 2",
-          "kicker": "Техническое обслуживание оборудования",
-          "readingGroup": "primary",
-          "references": [
-            {
-              "citation": "Алексахин А. Н., Вершинина Н. М., Джебилов А. В. и др. Архитектура вычислительных систем и компьютерных сетей / под ред. А. М. Нечаева, Н. М. Вершининой, Е. В. Устинова. Москва: Университет «Синергия», 2025. 436 с. ISBN 978-5-4257-0681-2.",
-              "url": "https://www.iprbookshop.ru/books/156708/details"
-            }
-          ],
-          "source": "Библиография исходного курса"
-        },
-        {
-          "id": "s08-05-hardware-maintenance-additional-reading",
-          "kind": "literature",
-          "title": "Дополнительная литература",
-          "kicker": "Техническое обслуживание оборудования",
-          "readingGroup": "additional",
-          "references": [
-            {
-              "citation": "PeopleCert — практики конфигурации, активов и развёртывания",
-              "url": "https://atv.peoplecert.org/itsm-tool-capabilities-and-itil-service-delivery/"
-            },
-            {
-              "citation": "PeopleCert — вопросы о переходе между версиями ITIL",
-              "url": "https://www.peoplecert.org/help-and-support/faq-itil"
-            }
-          ],
-          "source": "Открытые материалы PeopleCert · ITIL"
-        },
-        {
-          "id": "s08-05-hardware-maintenance-materials",
-          "kind": "materials",
-          "title": "Материалы лекции",
-          "kicker": "Техническое обслуживание оборудования",
-          "source": "Материалы исходного курса"
         },
         {
           "id": "s08-05-hardware-maintenance-agenda",

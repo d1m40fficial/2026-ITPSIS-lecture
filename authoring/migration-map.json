@@ -717,8 +717,7 @@
     "lectureId": "s07-01-support-lifecycle",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s07-01-support-lifecycle-literature-1",
-      "s07-01-support-lifecycle-literature-2"
+      "s07-01-support-lifecycle-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -1799,8 +1798,7 @@
     "lectureId": "s07-02-support-levels",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s07-02-support-levels-literature-1",
-      "s07-02-support-levels-literature-2"
+      "s07-02-support-levels-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -2881,8 +2879,7 @@
     "lectureId": "s07-03-sla",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s07-03-sla-literature-1",
-      "s07-03-sla-literature-2"
+      "s07-03-sla-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -3963,8 +3960,7 @@
     "lectureId": "s07-04-ticket-flow",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s07-04-ticket-flow-literature-1",
-      "s07-04-ticket-flow-literature-2"
+      "s07-04-ticket-flow-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -5044,8 +5040,7 @@
     "lectureId": "s07-05-reproduction",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s07-05-reproduction-literature-1",
-      "s07-05-reproduction-literature-2"
+      "s07-05-reproduction-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -6126,8 +6121,7 @@
     "lectureId": "s07-06-escalation",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s07-06-escalation-literature-1",
-      "s07-06-escalation-literature-2"
+      "s07-06-escalation-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -7208,8 +7202,7 @@
     "lectureId": "s07-07-knowledge-base",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s07-07-knowledge-base-literature-1",
-      "s07-07-knowledge-base-literature-2"
+      "s07-07-knowledge-base-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -8290,8 +8283,7 @@
     "lectureId": "s07-08-update-regulation",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s07-08-update-regulation-literature-1",
-      "s07-08-update-regulation-literature-2"
+      "s07-08-update-regulation-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -9372,8 +9364,7 @@
     "lectureId": "s07-09-change-management",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s07-09-change-management-literature-1",
-      "s07-09-change-management-literature-2"
+      "s07-09-change-management-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -10454,8 +10445,7 @@
     "lectureId": "s07-10-backup-restore",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s07-10-backup-restore-literature-1",
-      "s07-10-backup-restore-literature-2"
+      "s07-10-backup-restore-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -11536,8 +11526,7 @@
     "lectureId": "s08-01-failure-response",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s08-01-failure-response-literature-1",
-      "s08-01-failure-response-literature-2"
+      "s08-01-failure-response-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -12618,8 +12607,7 @@
     "lectureId": "s08-02-error-collection",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s08-02-error-collection-literature-1",
-      "s08-02-error-collection-literature-2"
+      "s08-02-error-collection-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -13699,8 +13687,7 @@
     "lectureId": "s08-03-layer-localization",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s08-03-layer-localization-literature-1",
-      "s08-03-layer-localization-literature-2"
+      "s08-03-layer-localization-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -14781,8 +14768,7 @@
     "lectureId": "s08-04-postmortem",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s08-04-postmortem-literature-1",
-      "s08-04-postmortem-literature-2"
+      "s08-04-postmortem-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."
@@ -15863,8 +15849,7 @@
     "lectureId": "s08-05-hardware-maintenance",
     "oldSlide": 3,
     "targetSlideIds": [
-      "s08-05-hardware-maintenance-literature-1",
-      "s08-05-hardware-maintenance-literature-2"
+      "s08-05-hardware-maintenance-sources"
     ],
     "action": "отредактирована",
     "reason": "Содержание включено в введение, маршрут или источники; повторяющиеся служебные страницы объединены."

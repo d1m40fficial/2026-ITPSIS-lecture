@@ -1,0 +1,22 @@
+{
+  "_comment": "Плейсхолдер. Настоящие коды преподаватель держит в config/access-codes.json, который не публикуется. Здесь только формат.",
+  "secret": "",
+  "releaseCode": "",
+  "lectures": {
+    "s07-01-support-lifecycle": [],
+    "s07-02-support-levels": [],
+    "s07-03-sla": [],
+    "s07-04-ticket-flow": [],
+    "s07-05-reproduction": [],
+    "s07-06-escalation": [],
+    "s07-07-knowledge-base": [],
+    "s07-08-update-regulation": [],
+    "s07-09-change-management": [],
+    "s07-10-backup-restore": [],
+    "s08-01-failure-response": [],
+    "s08-02-error-collection": [],
+    "s08-03-layer-localization": [],
+    "s08-04-postmortem": [],
+    "s08-05-hardware-maintenance": []
+  }
+}

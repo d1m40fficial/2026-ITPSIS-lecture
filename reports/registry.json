@@ -15,16 +15,15 @@
       "Состав договора на сопровождение",
       "Пересмотр сопровождения"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s07-01-support-lifecycle-title",
-    "pdfPath": "public/pdf/s07-01-support-lifecycle.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s07-01-support-lifecycle-title"
   },
   {
     "id": "s07-02-support-levels",
@@ -42,16 +41,15 @@
       "Организация смены и очереди",
       "Качество передачи между уровнями"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s07-02-support-levels-title",
-    "pdfPath": "public/pdf/s07-02-support-levels.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s07-02-support-levels-title"
   },
   {
     "id": "s07-03-sla",
@@ -69,16 +67,15 @@
       "Исключения и остановка часов",
       "Нарушение и улучшение SLA"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s07-03-sla-title",
-    "pdfPath": "public/pdf/s07-03-sla.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s07-03-sla-title"
   },
   {
     "id": "s07-04-ticket-flow",
@@ -96,16 +93,15 @@
       "Назначение исполнителя",
       "Закрытие с подтверждением"
     ],
-    "slides": 114,
+    "slides": 110,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s07-04-ticket-flow-title",
-    "pdfPath": "public/pdf/s07-04-ticket-flow.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s07-04-ticket-flow-title"
   },
   {
     "id": "s07-05-reproduction",
@@ -123,16 +119,15 @@
       "Минимизация сценария",
       "Пакет доказательств"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s07-05-reproduction-title",
-    "pdfPath": "public/pdf/s07-05-reproduction.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s07-05-reproduction-title"
   },
   {
     "id": "s07-06-escalation",
@@ -150,16 +145,15 @@
       "Ошибки при передаче",
       "Обратная связь после решения"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s07-06-escalation-title",
-    "pdfPath": "public/pdf/s07-06-escalation.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s07-06-escalation-title"
   },
   {
     "id": "s07-07-knowledge-base",
@@ -177,16 +171,15 @@
       "Публикация и рецензирование",
       "Актуальность и метрики"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s07-07-knowledge-base-title",
-    "pdfPath": "public/pdf/s07-07-knowledge-base.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s07-07-knowledge-base-title"
   },
   {
     "id": "s07-08-update-regulation",
@@ -204,16 +197,15 @@
       "Критерии и порядок отката",
       "Закрытие окна и отчёт"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s07-08-update-regulation-title",
-    "pdfPath": "public/pdf/s07-08-update-regulation.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s07-08-update-regulation-title"
   },
   {
     "id": "s07-09-change-management",
@@ -231,16 +223,15 @@
       "Внедрение и наблюдение",
       "Проверка и разбор изменения"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s07-09-change-management-title",
-    "pdfPath": "public/pdf/s07-09-change-management.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s07-09-change-management-title"
   },
   {
     "id": "s07-10-backup-restore",
@@ -258,16 +249,15 @@
       "Контроль задания копирования",
       "Учебное восстановление"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s07-10-backup-restore-title",
-    "pdfPath": "public/pdf/s07-10-backup-restore.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s07-10-backup-restore-title"
   },
   {
     "id": "s08-01-failure-response",
@@ -285,16 +275,15 @@
       "Подтверждение восстановления",
       "Переход к разбору"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s08-01-failure-response-title",
-    "pdfPath": "public/pdf/s08-01-failure-response.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s08-01-failure-response-title"
   },
   {
     "id": "s08-02-error-collection",
@@ -312,16 +301,15 @@
       "Безопасность журналов",
       "Организация сбора"
     ],
-    "slides": 114,
+    "slides": 110,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s08-02-error-collection-title",
-    "pdfPath": "public/pdf/s08-02-error-collection.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s08-02-error-collection-title"
   },
   {
     "id": "s08-03-layer-localization",
@@ -339,16 +327,15 @@
       "Проверка гипотезы приложения",
       "Фиксация локализации"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s08-03-layer-localization-title",
-    "pdfPath": "public/pdf/s08-03-layer-localization.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s08-03-layer-localization-title"
   },
   {
     "id": "s08-04-postmortem",
@@ -366,16 +353,15 @@
       "Предупреждающие действия",
       "Отчёт и контроль выполнения"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s08-04-postmortem-title",
-    "pdfPath": "public/pdf/s08-04-postmortem.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s08-04-postmortem-title"
   },
   {
     "id": "s08-05-hardware-maintenance",
@@ -393,15 +379,14 @@
       "Питание, сеть и климат",
       "Возврат в работу и история"
     ],
-    "slides": 115,
+    "slides": 111,
     "tests": 32,
     "visuals": 24,
     "version": "2026-09-12-itil-4",
-    "status": "проверено",
-    "teacher": "опубликован; автоматическая загрузка",
-    "pdf": "проверено",
-    "checks": "структура, пять разделов заметок, браузер и PDF",
-    "titleId": "s08-05-hardware-maintenance-title",
-    "pdfPath": "public/pdf/s08-05-hardware-maintenance.pdf"
+    "status": "содержание готово",
+    "teacher": "нужна сборка",
+    "pdf": "нужна сборка",
+    "checks": "запланировано",
+    "titleId": "s08-05-hardware-maintenance-title"
   }
 ]

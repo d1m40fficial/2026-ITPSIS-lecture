@@ -8,6 +8,8 @@ public/qr/trzbd-materials.png
 public/brand/mascot/trzbd-database-rhino*
 public/qr/okfks-materials.png
 config/teacher-profile.json
+config/access-codes.json
+config/access-codes.txt
 .env
 .env.*
 !.env.example
